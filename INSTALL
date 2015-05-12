@@ -1,17 +1,13 @@
-To build in Windows using Visual Studio 2010 (other versions not tested):
-  In the source directory, make new directory called "references"
-  Copy library directories [SDL-1.2.15 and SDL_image-1.2.12 (higher versions 
-    should be fine too) ] to references directory
-  Build sln in Visual Studio
-
+Windows:
+  Build with Visual Studio 2013 
   For distribution, build Release version, then copy library DLLs and images to
   the same directory as the EXE file.
 
-To build in Linux:
+Linux:
   sudo apt-get install freeglut3-dev libsdl1.2-dev libsdl-image1.2-dev
   make
 
-To build deb package:
+Debian package:
   Ensure files in debian directory are correct (esp. control, spacepirates.dirs)
 
   start in the main source directory named [directoryName]
