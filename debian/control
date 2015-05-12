@@ -1,0 +1,12 @@
+Source: spacepirates
+Maintainer: Alex Pogue <alex@epogue.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 8), libsdl1.2-dev, libsdl-image1.2-dev
+
+Package: spacepirates
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Two-player spaceship game
+	Collect the gold and bring it back to the goal before the other player.
