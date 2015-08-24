@@ -18,7 +18,7 @@ int main(int argc, char* args[]) {
     try {
 	    Graphics::startUp();
         Level level;
-	    level.loadLevel("j.png");
+	    level.loadLevel("aworks.bmp");
 	    bool quit = false;
 	    int lastFrame = getTime();
 	    while(!quit) {
