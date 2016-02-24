@@ -4,13 +4,13 @@
 #include "Gold.h"
 #include "GameObject.h"
 #include "Graphics.h"
-#include "Image.h"
+#include "Texture.h"
 #include "Platform.h"
 #include "Point.h"
 #include "Ship.h"
 
 void Level::loadLevel(std::string path) {
-	Color blockColor(0,0,0);
+	/*Color blockColor(0,0,0);
 	Color player1Color(150,150,255);
 	Color player2Color(255,0,0);
 	Color goldColor(255,255,0);
@@ -18,7 +18,7 @@ void Level::loadLevel(std::string path) {
 	Color groundColor(204,102,51 );
 	gravityAcceleration = -20.0f; // kg*px/s/s
 
-	Image image;
+	Texture image;
 	image.load(path.c_str());
 	Color color = image.getPixel(0,0);
 	for(int w = 0; w < image.width(); w++) {
@@ -55,7 +55,7 @@ void Level::loadLevel(std::string path) {
 				gameObjects.push_back(block);
 			}
 		}
-	}
+	}*/
 }
 
 void Level::draw() {

@@ -4,5 +4,5 @@
 #include "Point.h"
 
 Platform::Platform(Point p) : Block(p) {
-  color = Graphics::green;
+  //color = Graphics::green;
 }

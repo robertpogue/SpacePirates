@@ -38,7 +38,7 @@ void Ship::update() {
 }
 
 void Ship::draw() {
-	Point shipTop(0,12);
+	/*Point shipTop(0,12);
 	shipTop = rotateAboutOrigin(shipTop, getRot());
 	Point shipBottomRight(6,-8);
 	shipBottomRight = rotateAboutOrigin(shipBottomRight, getRot());
@@ -71,7 +71,7 @@ void Ship::draw() {
 			               goldBottomRight + getPos(),
 						   goldTop + getPos(),
 						   Color(255,255,255));
-	}
+	}*/
 }
 
 void Ship::notify(Input::Event e) {

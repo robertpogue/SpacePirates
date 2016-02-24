@@ -5,6 +5,7 @@
 
 #include "Graphics.h"
 #include "Input.h"
+#include "Level.h"
 int main(int argc, char ** argv) {
 
     Graphics graphics;
