@@ -11,11 +11,14 @@ int main(int argc, char ** argv) {
     Texture texture = graphics.load("hello.bmp");
     Input::Event e;
     bool displayTexture{ true };
+    bool quit{ false };
     
     // rendering loop
-    while(true) {
+    while(!quit) {
+        // handle input
         do {
             e = Input::nextInput();
+            if(e == Input::QUIT) quit = true;
             if(e == Input::KEY_A) displayTexture = !displayTexture; // toggle
         } while(e != Input::NO_EVENT);
 
