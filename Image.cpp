@@ -1,18 +1,14 @@
 #include "Image.h"
 #include "Color.h"
-#ifdef _WIN32
-	#include "SDL.h"
-	#include "SDL_image.h"
-#else
-	#include "SDL/SDL.h"
-	#include "SDL/SDL_image.h"
-#endif
+#include "SDL.h"
+#include "SDL_image.h"
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 void Image::load(std::string path) {
+    /*
 	SDL_Surface* tempSurface = IMG_Load(path.c_str());
     if(tempSurface == NULL) {
         throw std::runtime_error("error loading image: " + path);
@@ -21,6 +17,7 @@ void Image::load(std::string path) {
 	surfaceDeleter(tempSurface);
 	imageData = std::shared_ptr<SDL_Surface>(optimizedSurface, surfaceDeleter);
 	SDL_LockSurface(imageData.get());
+  */
 }
 
 Color Image::getPixel(int x, int y) {

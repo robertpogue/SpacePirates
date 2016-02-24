@@ -1,11 +1,7 @@
 #pragma once
 
 #include "Color.h"
-#ifdef _WIN32
-	#include "SDL.h"
-#else
-	#include "SDL/SDL.h"
-#endif
+#include "SDL.h"
 #include <memory>
 #include <string>
 
