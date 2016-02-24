@@ -1,9 +1,5 @@
 #include "Time.h"
-#ifdef _WIN32
-	#include "SDL.h"
-#else
-	#include "SDL/SDL.h"
-#endif
+#include "SDL.h"
 
 int getTime() {
 	return (int)(SDL_GetTicks());
