@@ -3,41 +3,23 @@
 #include <string>
 #include <assert.h>
 
+#include "Graphics.h"
+
 int main(int argc, char ** argv) {
-    try {
-        int result = SDL_Init(SDL_INIT_VIDEO);
-        assert(result);
 
-        SDL_Window* window = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-        assert(window);
+    Graphics graphics;
+    Texture texture = graphics.load("hello.bmp");
 
-        SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        assert(renderer);
+    // rendering loop
+    for(int i = 0; i < 3; ++i) {
+        graphics.clear();
+        graphics.blit(texture);
+        graphics.present();
 
-        std::string imagePath = "hello.bmp";
-        SDL_Surface* bmp = SDL_LoadBMP(imagePath.c_str());
-        assert(bmp);
-
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, bmp);
-        SDL_FreeSurface(bmp);
-        assert(texture);
-
-        // rendering loop
-        for(int i = 0; i < 3; ++i) {
-            SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, texture, NULL, NULL);
-            SDL_RenderPresent(renderer);
-            SDL_Delay(1000);
-        }
-
-        SDL_DestroyTexture(texture);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 0;
-    } catch(std::exception) {
-        return 1;
+        SDL_Delay(1000);
     }
+    return 0;
+
 }
 /*#include "Graphics.h"
 #include "Input.h"

@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "Time.h"
 #include <cmath>
+#include <algorithm>
 
 Ship::Ship(Player p, float mass) : booster(false), player(p),
                        rotatingClockwise(false),
