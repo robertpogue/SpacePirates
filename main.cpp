@@ -4,22 +4,28 @@
 #include <assert.h>
 
 #include "Graphics.h"
-
+#include "Input.h"
 int main(int argc, char ** argv) {
 
     Graphics graphics;
     Texture texture = graphics.load("hello.bmp");
-
+    Input::Event e;
+    bool displayTexture{ true };
+    
     // rendering loop
-    for(int i = 0; i < 3; ++i) {
-        graphics.clear();
-        graphics.blit(texture);
-        graphics.present();
+    while(true) {
+        do {
+            e = Input::nextInput();
+            if(e == Input::KEY_A) displayTexture = !displayTexture; // toggle
+        } while(e != Input::NO_EVENT);
 
-        SDL_Delay(1000);
+        graphics.clear();
+        if(displayTexture) {
+            graphics.blit(texture);
+        }
+        graphics.present();
     }
     return 0;
-
 }
 /*#include "Graphics.h"
 #include "Input.h"
