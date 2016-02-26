@@ -4,5 +4,5 @@
 #include "Point.h"
 
 Gold::Gold(Point p) : Block(p) {
-    color = Graphics::yellow;
+    //color = Graphics::yellow;
 }

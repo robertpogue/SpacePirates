@@ -3,25 +3,26 @@
 #include "Color.h"
 #include "GameObject.h"
 #include "Input.h"
-#include "Level.h"
 #include "Point.h"
+//#include "Texture.h"
 
-enum Player {PLAYER_ONE, PLAYER_TWO };
+enum class Player {One, Two };
 
-struct Ship :public GameObject {
+class Ship :public GameObject {
+public:
 	float mass; // kg
 	long lastUpdate;
 	Player player;
-	Ship(Player, float mass = 10.0f);
+	Ship(Player = Player::One, float mass = 10.0f);
 	void notify(Input::Event);
-	void draw();
+    //void setTexture(Texture& t);
 	// inherited from RigidBody
 	void onCollision(const RigidBody& other);
 	void setSpawn(Point);
-	void setColor(Color);
+	//void setColor(Color);
 	void update();
 private:
-	Color color;
+	//Texture texture;
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;

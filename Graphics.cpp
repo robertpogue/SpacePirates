@@ -1,96 +1,67 @@
 #include "Graphics.h"
-#include "Color.h"
-#include "Point.h"
-#ifdef _WIN32
-    #include "SDL.h"
-    #include "SDL_opengl.h"
-    #include "SDL_ttf.h"
-#else
-    #include "SDL/SDL.h"
-    #include "SDL/SDL_opengl.h"
-    #include "SDL/SDL_ttf.h"
-#endif
-#include <stdexcept>
+#include <assert.h>
 
 // file-scope variables
-static SDL_Surface* screen = NULL;
-static SDL_Color textColor = {255,255,255};
-static SDL_Surface* textSurface = NULL;
-static TTF_Font* font = NULL;
+static SDL_Window* window = NULL;
 
-void Graphics::startUp() {
-    const int screenWidth = 1024;
-    const int screenHeight = 768;
-    const int screenBPP = 32;
-    SDL_Init(SDL_INIT_EVERYTHING);
-    screen = SDL_SetVideoMode(screenWidth,
-                              screenHeight,
-                              screenBPP,
-                              SDL_OPENGL);
+Graphics::Graphics() {
+    int result = SDL_Init(SDL_INIT_VIDEO);
+    assert(result == 0);
 
-    // initialize ttf font graphics
-    TTF_Init();
-    static int fontSize = 14; // pt
-    font = TTF_OpenFont("VeraMono.ttf", fontSize);
-    if(font == NULL) throw std::runtime_error("failed to load font");
+    window = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    assert(window);
 
-    // initialize openGL
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0.0, screenWidth, 0.0, screenHeight, 1.0, -1.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glClearColor(darkBlue.rNorm(), darkBlue.gNorm(), darkBlue.bNorm(), 1);
-    SDL_WM_SetCaption("Space Pirates", NULL);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    assert(renderer);
 }
 
-void Graphics::writeText(std::string text, int xPos, int yPos) {
-    /*textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
-    SDL_Rect offset;
-    offset.x = xPos;
-    offset.y = yPos;
-    Uint8 pixelByteDepth = textSurface->format->BytesPerPixel;
-    GLenum textureFormat;
-    // alpha
-    if(pixelByteDepth == 4) {
-        if(textSurface->format->Rmask == 0x000000FF) {
-            textureFormat = GL_RGBA;
-        }
-        else {
-            textureFormat = GL_BGRA;
-        }
-    }
-    else {
-        if(textSurface->format->Rmask == 0x000000FF) {
-            textureFormat = GL_RGB;
-        }
-        else {
-            textureFormat = GL_BGR;
-        }
-    }
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, pixelByteDepth, textSurface->w, textSurface->h, 0, textureFormat, GL_UNSIGNED_BYTE, textSurface->pixels);
-    glBindTexture(GL_TEXTURE_2D, texture);*/
-}
-
-void Graphics::flip() {
-    SDL_GL_SwapBuffers();
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void Graphics::triangle(const Point& p1, const Point& p2, const Point& p3, const Color& c) {
-    glBegin(GL_TRIANGLES);
-        glColor3f( c.r/255.f, c.g/255.f, c.b/255.f );
-        glVertex2f((GLfloat)p1.x, (GLfloat)p1.y);
-        glVertex2f((GLfloat)p2.x, (GLfloat)p2.y);
-        glVertex2f((GLfloat)p3.x, (GLfloat)p3.y);
-    glEnd();
-}
-
-void Graphics::shutDown() {
-    SDL_FreeSurface(textSurface);
-    SDL_FreeSurface(screen);
+Graphics::~Graphics() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+Texture Graphics::load(std::string path) {
+    SDL_Surface* bmp = SDL_LoadBMP(path.c_str());
+    assert(bmp);
+
+    Texture t(SDL_CreateTextureFromSurface(renderer, bmp));
+    SDL_FreeSurface(bmp);
+
+    return t;
+}
+
+void Graphics::clear() {
+    SDL_RenderClear(renderer);
+}
+
+int Graphics::getHeight() {
+    int w, h;
+    SDL_GetRendererOutputSize(renderer, &w, &h);
+    return h;
+}
+
+void Graphics::blit(const Texture& texture, Point destination, float rotation) {
+    // convert from Graphics coordinate system (origin at bottom left)
+    // to SDL coordinate system (origin at top left)
+    destination.y = -destination.y + getHeight();
+    rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
+    SDL_Rect dest;
+    dest.x = (int)destination.x;
+    dest.y = (int)destination.y;
+    dest.w = 20;
+    dest.h = 20;
+    
+
+    SDL_RenderCopyEx(renderer,
+                     texture.sdlTexture(), // source
+                     nullptr,              // source rectangle
+                     &dest,                // destination rectangle
+                     rotation,             // angle in degrees
+                     nullptr,              // center of rotation, default to h/2, w/2
+                     SDL_FLIP_NONE );
+}
+
+void Graphics::present() {
+    SDL_RenderPresent(renderer);
 }
