@@ -42,12 +42,17 @@ int Graphics::getHeight() {
 }
 
 void Graphics::blit(const Texture& texture, Point destination, float rotation) {
+    // convert from Graphics coordinate system (origin at bottom left)
+    // to SDL coordinate system (origin at top left)
+    destination.y = -destination.y + getHeight();
+    rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
     SDL_Rect dest;
     dest.x = (int)destination.x;
     dest.y = (int)destination.y;
     dest.w = 20;
     dest.h = 20;
-    rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
+    
+
     SDL_RenderCopyEx(renderer,
                      texture.sdlTexture(), // source
                      nullptr,              // source rectangle

@@ -13,7 +13,7 @@ public:
     void    clear();
     int     getHeight(); // px
     // will place center of texture at destination point
-    // point is in pixels from top left of screen
+    // point is in pixels from bottom left of screen
     void blit(const Texture&, Point destination, float rotation);
     void present();
     //void triangle(const Point& p1, 

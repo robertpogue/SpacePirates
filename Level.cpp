@@ -9,6 +9,8 @@
 #include "Point.h"
 #include "Ship.h"
 
+// declare utility functions
+bool areColliding(const GameObject& c1, const GameObject& c2);
 
 Level::Level() : gravity(-10), player2(Player::Two) {
     player1.setPos(Point(50, 50));
@@ -26,27 +28,18 @@ void Level::update() {
     player2.applyForce(0.f, gravityForce);
     player1.update();
     player2.update();
+
+    if(areColliding(player1, player2)) {
+        player1.setPos(Point(50, 50));
+    }
 }
 
 void Level::draw(Graphics& graphics) {
     Texture texture1 = graphics.load("ship1.bmp");
     Texture texture2 = graphics.load("ship2.bmp");
-
-    // coordinate conversion is necessary here
-    // level coordinates have origin at bottom left
-    // with positive x to the right and positive y up
-    // graphics coordinates have origin at top left
-    // with positive x to the right and positive y down
-    float rot = player1.getRot();
-    Point position = player1.getPos();
-    position.y = -position.y + graphics.getHeight();
-    graphics.blit(texture1, position, player1.getRot());
-
-    //TODO loop rather than repeat
-    rot = player2.getRot();
-    position = player2.getPos();
-    position.y = -position.y + graphics.getHeight();
-    graphics.blit(texture2, position, player2.getRot());
+    
+    graphics.blit(texture1, player1.getPos(), player1.getRot());    
+    graphics.blit(texture2, player2.getPos(), player2.getRot());
 
 }
 //void Level::loadLevel(std::string path) {
@@ -106,11 +99,6 @@ void Level::notify(Input::Event e) {
     player2.notify(e);
 }
 
-//void Level::update() {
-	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		//gameObjects.at(i)->update();
-	//}
-//}
 
 //void Level::applyGravity() {
 	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
@@ -132,11 +120,11 @@ void Level::notify(Input::Event e) {
 	}*/
 //}
 
-//bool Level::areColliding(const GameObject* const c1, const GameObject* const c2) {
-	/*Point difference = c1->getPos()-c2->getPos();
-	int radiusSquared = c1->getCollisionRadius() * c1->getCollisionRadius() + 
-		                c2->getCollisionRadius() * c2->getCollisionRadius();
+bool areColliding(const GameObject& c1, const GameObject& c2) {
+	Point difference = c1.getPos()-c2.getPos();
+	int radiusSquared = c1.getCollisionRadius() * c1.getCollisionRadius() + 
+		                c2.getCollisionRadius() * c2.getCollisionRadius();
 	if(difference.squareMagnitude() < radiusSquared)
 		return true;
 	else return false;
-}*/
+}
