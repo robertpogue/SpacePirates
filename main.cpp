@@ -6,27 +6,29 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "Level.h"
+#include "Ship.h"
 int main(int argc, char ** argv) {
 
     Graphics graphics;
-    Texture texture = graphics.load("hello.bmp");
+
     Input::Event e;
-    bool displayTexture{ true };
     bool quit{ false };
     
+    Level level;
+    
+
     // rendering loop
     while(!quit) {
         // handle input
         do {
             e = Input::nextInput();
             if(e == Input::QUIT) quit = true;
-            if(e == Input::KEY_A) displayTexture = !displayTexture; // toggle
+            level.notify(e);
         } while(e != Input::NO_EVENT);
 
         graphics.clear();
-        if(displayTexture) {
-            graphics.blit(texture);
-        }
+        level.draw(graphics);
+
         graphics.present();
     }
     return 0;

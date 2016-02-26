@@ -9,7 +9,24 @@
 #include "Point.h"
 #include "Ship.h"
 
-void Level::loadLevel(std::string path) {
+
+Level::Level() {
+}
+
+//void Level::add(Ship s) {
+    //player1 = s;
+//}
+
+void Level::update() {
+   // player1.update();
+}
+
+void Level::draw(Graphics& graphics) {
+    Texture texture = graphics.load("ship1.bmp");
+    graphics.blit(texture);
+
+}
+//void Level::loadLevel(std::string path) {
 	/*Color blockColor(0,0,0);
 	Color player1Color(150,150,255);
 	Color player2Color(255,0,0);
@@ -56,35 +73,29 @@ void Level::loadLevel(std::string path) {
 			}
 		}
 	}*/
-}
-
-void Level::draw() {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		gameObjects.at(i)->draw();
-	}
-}
+//}
 
 void Level::notify(Input::Event e) {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		gameObjects.at(i)->notify(e);
-	}
+	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
+		//gameObjects.at(i)->notify(e);
+	//}
 }
 
-void Level::update() {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		gameObjects.at(i)->update();
-	}
-}
+//void Level::update() {
+	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
+		//gameObjects.at(i)->update();
+	//}
+//}
 
-void Level::applyGravity() {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		float gravityForce = gravityAcceleration * gameObjects.at(i)->getMass();
-		gameObjects.at(i)->applyForce(0.f, gravityForce);
-	}
-}
+//void Level::applyGravity() {
+	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
+		//float gravityForce = gravityAcceleration * gameObjects.at(i)->getMass();
+		//gameObjects.at(i)->applyForce(0.f, gravityForce);
+	//}
+//}
 
-void Level::detectCollisions() {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
+//void Level::detectCollisions() {
+	/*for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		if(!gameObjects[i]->isDynamic()) continue;
 		for(unsigned int j = 0; j < gameObjects.size(); j++) {
 			if(i==j) continue; // don't test for self-colision
@@ -93,14 +104,14 @@ void Level::detectCollisions() {
 				gameObjects[j]->onCollision(*gameObjects[i]);
 			}
 		}
-	}
-}
+	}*/
+//}
 
-bool Level::areColliding(const GameObject* const c1, const GameObject* const c2) {
-	Point difference = c1->getPos()-c2->getPos();
+//bool Level::areColliding(const GameObject* const c1, const GameObject* const c2) {
+	/*Point difference = c1->getPos()-c2->getPos();
 	int radiusSquared = c1->getCollisionRadius() * c1->getCollisionRadius() + 
 		                c2->getCollisionRadius() * c2->getCollisionRadius();
-	if(difference.squareMagnitude() < radiusSquared) 
+	if(difference.squareMagnitude() < radiusSquared)
 		return true;
 	else return false;
-}
+}*/

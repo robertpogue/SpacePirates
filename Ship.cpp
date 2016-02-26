@@ -12,8 +12,7 @@
 Ship::Ship(Player p, float mass) : booster(false), player(p),
                        rotatingClockwise(false),
 					   rotatingCounterclockwise(false),
-					   hasGold(false), 
-					   color(1, 1, 1) {
+					   hasGold(false) {
 	//lastUpdate = getTime();
 	setCollisionRadius(14);
     setMass(mass);
@@ -37,8 +36,8 @@ void Ship::update() {
 	RigidBody::update();
 }
 
-void Ship::draw() {
-	/*Point shipTop(0,12);
+/*void Ship::draw(Graphics& graphics) {
+	Point shipTop(0,12);
 	shipTop = rotateAboutOrigin(shipTop, getRot());
 	Point shipBottomRight(6,-8);
 	shipBottomRight = rotateAboutOrigin(shipBottomRight, getRot());
@@ -71,11 +70,11 @@ void Ship::draw() {
 			               goldBottomRight + getPos(),
 						   goldTop + getPos(),
 						   Color(255,255,255));
-	}*/
-}
+	}
+}*/
 
 void Ship::notify(Input::Event e) {
-	if(player == PLAYER_ONE) {
+	if(player == Player::One) {
 		if(e == Input::ARROW_UP) booster = true;
 		if(e == Input::ARROW_UP_RELEASE) booster = false;
 		if(e == Input::ARROW_LEFT) rotatingClockwise = true;
@@ -83,7 +82,7 @@ void Ship::notify(Input::Event e) {
 		if(e == Input::ARROW_RIGHT) rotatingCounterclockwise = true;
 		if(e == Input::ARROW_RIGHT_RELEASE) rotatingCounterclockwise = false;
 	}
-	if (player == PLAYER_TWO) {
+	if (player == Player::Two) {
 		if(e == Input::KEY_W) booster = true;
 		if(e == Input::KEY_W_RELEASE) booster = false;
 		if(e == Input::KEY_A) rotatingClockwise = true;
@@ -142,10 +141,6 @@ Point Ship::rotateAboutOrigin(Point p, float radians) {
 }
 
 void Ship::setSpawn(Point sp) {
-	spawn = sp;
-	setPos(spawn);
-}
-
-void Ship::setColor(Color c) {
-	color = c;
+    spawn = sp;
+    setPos(spawn);
 }
