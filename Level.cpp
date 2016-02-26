@@ -18,12 +18,13 @@ Level::Level() {
 //}
 
 void Level::update() {
-   // player1.update();
+   player1.update();
 }
 
 void Level::draw(Graphics& graphics) {
     Texture texture = graphics.load("ship1.bmp");
-    graphics.blit(texture, Point(10,10));
+    float rot = player1.getRot();
+    graphics.blit(texture, player1.getPos(), player1.getRot());
 
 }
 //void Level::loadLevel(std::string path) {
@@ -79,6 +80,7 @@ void Level::notify(Input::Event e) {
 	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		//gameObjects.at(i)->notify(e);
 	//}
+    player1.notify(e);
 }
 
 //void Level::update() {

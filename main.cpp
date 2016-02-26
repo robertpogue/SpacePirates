@@ -25,7 +25,7 @@ int main(int argc, char ** argv) {
             if(e == Input::QUIT) quit = true;
             level.notify(e);
         } while(e != Input::NO_EVENT);
-
+        level.update();
         graphics.clear();
         level.draw(graphics);
 

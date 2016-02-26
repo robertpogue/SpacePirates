@@ -35,13 +35,20 @@ void Graphics::clear() {
     SDL_RenderClear(renderer);
 }
 
-void Graphics::blit(const Texture& texture, Point destination) {
+void Graphics::blit(const Texture& texture, Point destination, float rotation) {
     SDL_Rect dest;
     dest.x = (int)destination.x;
     dest.y = (int)destination.y;
     dest.w = 10;
     dest.h = 10;
-    SDL_RenderCopy(renderer, texture.sdlTexture(), NULL, &dest);
+    rotation = rotation * (180.0 / 3.14159); // convert from radians to pi
+    SDL_RenderCopyEx(renderer,
+                     texture.sdlTexture(), // source
+                     nullptr,              // source rectangle
+                     &dest,                // destination rectangle
+                     rotation,             // angle in degrees
+                     nullptr,              // center of rotation, default to h/2, w/2
+                     SDL_FLIP_NONE );
 }
 
 void Graphics::present() {

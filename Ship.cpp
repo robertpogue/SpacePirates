@@ -30,7 +30,8 @@ void Ship::update() {
 	}
 	float turnRate = 5;// radians/second
 	if(rotatingClockwise) setRot(getRot() + turnRate * deltaT/1000);
-	if(rotatingCounterclockwise) setRot(getRot() - turnRate * deltaT/1000);
+	if(rotatingCounterclockwise) 
+        setRot(getRot() - turnRate * deltaT/1000);
 
 	// allow rigidbody to simulate physics
 	RigidBody::update();

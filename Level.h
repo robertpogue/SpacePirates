@@ -11,8 +11,8 @@ public:
     void notify(Input::Event e);
 	/*void applyGravity();
 	void detectCollisions();*/
-//private:
-    //Ship player1;
+private:
+    Ship player1;
     /*
 	float gravityAcceleration;
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
