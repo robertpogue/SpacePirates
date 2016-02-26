@@ -10,7 +10,8 @@ public:
     Graphics();
     ~Graphics();
     Texture load(std::string path);
-    void clear();
+    void    clear();
+    int     getHeight(); // px
     // will place center of texture at destination point
     // point is in pixels from top left of screen
     void blit(const Texture&, Point destination, float rotation);

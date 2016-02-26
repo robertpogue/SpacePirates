@@ -10,7 +10,8 @@
 #include "Ship.h"
 
 
-Level::Level() {
+Level::Level() : gravity(-10) {
+    player1.setPos(Point(50, 50));
 }
 
 //void Level::add(Ship s) {
@@ -18,13 +19,24 @@ Level::Level() {
 //}
 
 void Level::update() {
-   player1.update();
+    // apply gravity
+    float gravityForce = gravity * player1.getMass();
+    player1.applyForce(0.f, gravityForce);
+    player1.update();
 }
 
 void Level::draw(Graphics& graphics) {
     Texture texture = graphics.load("ship1.bmp");
+
+    // coordinate conversion is necessary here
+    // level coordinates have origin at bottom left
+    // with positive x to the right and positive y up
+    // graphics coordinates have origin at top left
+    // with positive x to the right and positive y down
     float rot = player1.getRot();
-    graphics.blit(texture, player1.getPos(), player1.getRot());
+    Point position = player1.getPos();
+    position.y = -position.y + graphics.getHeight();
+    graphics.blit(texture, position, player1.getRot());
 
 }
 //void Level::loadLevel(std::string path) {

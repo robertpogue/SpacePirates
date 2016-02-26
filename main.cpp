@@ -15,7 +15,6 @@ int main(int argc, char ** argv) {
     bool quit{ false };
     
     Level level;
-    
 
     // rendering loop
     while(!quit) {
