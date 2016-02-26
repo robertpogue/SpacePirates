@@ -10,8 +10,9 @@
 #include "Ship.h"
 
 
-Level::Level() : gravity(-10) {
+Level::Level() : gravity(-10), player2(Player::Two) {
     player1.setPos(Point(50, 50));
+    player2.setPos(Point(100, 50));
 }
 
 //void Level::add(Ship s) {
@@ -22,11 +23,14 @@ void Level::update() {
     // apply gravity
     float gravityForce = gravity * player1.getMass();
     player1.applyForce(0.f, gravityForce);
+    player2.applyForce(0.f, gravityForce);
     player1.update();
+    player2.update();
 }
 
 void Level::draw(Graphics& graphics) {
-    Texture texture = graphics.load("ship1.bmp");
+    Texture texture1 = graphics.load("ship1.bmp");
+    Texture texture2 = graphics.load("ship2.bmp");
 
     // coordinate conversion is necessary here
     // level coordinates have origin at bottom left
@@ -36,7 +40,13 @@ void Level::draw(Graphics& graphics) {
     float rot = player1.getRot();
     Point position = player1.getPos();
     position.y = -position.y + graphics.getHeight();
-    graphics.blit(texture, position, player1.getRot());
+    graphics.blit(texture1, position, player1.getRot());
+
+    //TODO loop rather than repeat
+    rot = player2.getRot();
+    position = player2.getPos();
+    position.y = -position.y + graphics.getHeight();
+    graphics.blit(texture2, position, player2.getRot());
 
 }
 //void Level::loadLevel(std::string path) {
@@ -93,6 +103,7 @@ void Level::notify(Input::Event e) {
 		//gameObjects.at(i)->notify(e);
 	//}
     player1.notify(e);
+    player2.notify(e);
 }
 
 //void Level::update() {

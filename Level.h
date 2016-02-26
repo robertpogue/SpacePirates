@@ -13,5 +13,6 @@ public:
 	void detectCollisions();*/
 private:
     Ship player1;
+    Ship player2;
 	float gravity; // kg*px/s/s
 };
