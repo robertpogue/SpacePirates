@@ -31,6 +31,11 @@ void Level::update() {
 
     if(areColliding(player1, player2)) {
         player1.setPos(Point(50, 50));
+        player1.setXVel(0);
+        player1.setYVel(0);
+        player2.setPos(Point(100, 50));
+        player2.setXVel(0);
+        player2.setYVel(0);
     }
 }
 
