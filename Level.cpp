@@ -23,7 +23,7 @@ void Level::update() {
 
 void Level::draw(Graphics& graphics) {
     Texture texture = graphics.load("ship1.bmp");
-    graphics.blit(texture);
+    graphics.blit(texture, Point(10,10));
 
 }
 //void Level::loadLevel(std::string path) {

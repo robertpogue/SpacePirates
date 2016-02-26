@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "Texture.h"
+#include "Point.h"
 
 class Graphics {
 public:
@@ -10,7 +11,9 @@ public:
     ~Graphics();
     Texture load(std::string path);
     void clear();
-    void blit(const Texture&);
+    // will place center of texture at destination point
+    // point is in pixels from top left of screen
+    void blit(const Texture&, Point destination);
     void present();
     //void triangle(const Point& p1, 
         //const Point& p2,

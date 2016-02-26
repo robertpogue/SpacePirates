@@ -35,8 +35,13 @@ void Graphics::clear() {
     SDL_RenderClear(renderer);
 }
 
-void Graphics::blit(const Texture& texture) {
-    SDL_RenderCopy(renderer, texture.sdlTexture(), NULL, NULL);
+void Graphics::blit(const Texture& texture, Point destination) {
+    SDL_Rect dest;
+    dest.x = (int)destination.x;
+    dest.y = (int)destination.y;
+    dest.w = 10;
+    dest.h = 10;
+    SDL_RenderCopy(renderer, texture.sdlTexture(), NULL, &dest);
 }
 
 void Graphics::present() {
