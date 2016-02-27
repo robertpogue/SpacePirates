@@ -40,6 +40,7 @@ void Level::update(int delta) {
 }
 
 void Level::draw(Graphics& graphics) {
+    graphics.blit(background, Point(0, 700), 0);
     Texture texture1 = graphics.load("ships/ship1.bmp");
     Texture texture2 = graphics.load("ships/ship2.bmp");
 
