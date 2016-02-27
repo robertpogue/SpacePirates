@@ -7,7 +7,7 @@
 
 class Texture {
 public:
-    Texture(SDL_Texture*);
+    Texture(SDL_Texture* = nullptr);
     SDL_Texture* sdlTexture() const; // do NOT keep a copy of this pointer
 	//void load(std::string path);
 	//Color getPixel(int x, int y);

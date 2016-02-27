@@ -19,6 +19,9 @@ int main(int argc, char ** argv) {
     Level level;
     Time time;
 
+    
+    level.setForeground(graphics.load("levels/mountains.bmp"));
+
     // rendering loop
     while(!quit) {
         // calculate framerate

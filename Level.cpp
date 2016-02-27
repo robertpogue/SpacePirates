@@ -13,8 +13,8 @@
 bool areColliding(const GameObject& c1, const GameObject& c2);
 
 Level::Level() : gravity(-10), player2(Player::Two) {
-    player1.setPos(Point(50, 50));
-    player2.setPos(Point(100, 50));
+    player1.setPos(Point(50, 250));
+    player2.setPos(Point(100, 250));
 }
 
 //void Level::add(Ship s) {
@@ -30,22 +30,32 @@ void Level::update(int delta) {
     player2.update(delta);
 
     if(areColliding(player1, player2)) {
-        player1.setPos(Point(50, 50));
+        player1.setPos(Point(50, 150));
         player1.setXVel(0);
         player1.setYVel(0);
-        player2.setPos(Point(100, 50));
+        player2.setPos(Point(100, 150));
         player2.setXVel(0);
         player2.setYVel(0);
     }
 }
 
 void Level::draw(Graphics& graphics) {
-    Texture texture1 = graphics.load("ship1.bmp");
-    Texture texture2 = graphics.load("ship2.bmp");
-    
+    Texture texture1 = graphics.load("ships/ship1.bmp");
+    Texture texture2 = graphics.load("ships/ship2.bmp");
+
+    graphics.blit(foreground, Point(0, 700), 0);
     graphics.blit(texture1, player1.getPos(), player1.getRot());    
     graphics.blit(texture2, player2.getPos(), player2.getRot());
+    
 
+}
+
+void Level::setForeground(Texture t) {
+    foreground = t;
+}
+
+void Level::setBackground(Texture t) {
+    background = t;
 }
 //void Level::loadLevel(std::string path) {
 	/*Color blockColor(0,0,0);
