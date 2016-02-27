@@ -21,13 +21,13 @@ Level::Level() : gravity(-10), player2(Player::Two) {
     //player1 = s;
 //}
 
-void Level::update() {
+void Level::update(int delta) {
     // apply gravity
     float gravityForce = gravity * player1.getMass();
     player1.applyForce(0.f, gravityForce);
     player2.applyForce(0.f, gravityForce);
-    player1.update();
-    player2.update();
+    player1.update(delta);
+    player2.update(delta);
 
     if(areColliding(player1, player2)) {
         player1.setPos(Point(50, 50));
@@ -46,7 +46,6 @@ void Level::draw(Graphics& graphics) {
     graphics.blit(texture1, player1.getPos(), player1.getRot());    
     graphics.blit(texture2, player2.getPos(), player2.getRot());
 
-    graphics.writeText("hello world!", Point(300, 300));
 }
 //void Level::loadLevel(std::string path) {
 	/*Color blockColor(0,0,0);

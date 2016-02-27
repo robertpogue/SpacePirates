@@ -1,6 +1,5 @@
 #include "RigidBody.h"
 #include "Point.h"
-#include "Time.h"
 #include <math.h>
 
 const static float PI = 3.14159f;
@@ -10,14 +9,9 @@ RigidBody::RigidBody(Point pos, float m, int r) : dynamic(false), pos(pos),
 												  mass(m), xVel(0), 
 												  yVel(0), rot(0),
                                                   xForce(0), yForce(0) {
-	lastUpdate = getTime();
 }
 
-void RigidBody::update() {
-	// get time elapsed since last update
-	long deltaT = getTime() - lastUpdate;
-	lastUpdate = getTime();
-
+void RigidBody::update(int deltaT) {
 	// update velocity
 	xVel += xForce/mass * deltaT/1000.f;
 	yVel += yForce/mass * deltaT/1000.f;

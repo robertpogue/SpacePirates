@@ -71,7 +71,7 @@ void Graphics::present() {
 
 void Graphics::writeText(std::string text, Point destination) {
     int fontsize = 12;
-    SDL_Color color{ 100, 100, 100, 100 }; // rgba
+    SDL_Color color{ 200, 200, 200, 200 }; // rgba
     //TODO RAII
     TTF_Font* font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", 12);
     SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), color);

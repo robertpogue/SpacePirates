@@ -20,7 +20,7 @@ public:
 	void onCollision(const RigidBody& other);
 	void setSpawn(Point);
 	//void setColor(Color);
-	void update();
+	void update(int delta); // time elapsed in ms
 private:
 	//Texture texture;
 	Point spawn;

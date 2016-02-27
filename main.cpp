@@ -7,27 +7,33 @@
 #include "Input.h"
 #include "Level.h"
 #include "Ship.h"
+#include "Time.h"
+
 int main(int argc, char ** argv) {
-
-    Graphics graphics;
-
+    // variables on the stack
     Input::Event e;
     bool quit{ false };
     
+    // game engine subsystems
+    Graphics graphics;
     Level level;
+    Time time;
 
     // rendering loop
     while(!quit) {
-        // handle input
-        do {
+        // calculate framerate
+        int frameTime = time.frame();
+        int fps = round(1000.f / frameTime);
+
+        do { // handle input
             e = Input::nextInput();
             if(e == Input::QUIT) quit = true;
             level.notify(e);
         } while(e != Input::NO_EVENT);
-        level.update();
         graphics.clear();
+        level.update(frameTime);
         level.draw(graphics);
-
+        graphics.writeText(std::to_string(fps) + " fps", Point(5, graphics.getHeight() - 2.f));
         graphics.present();
     }
     return 0;

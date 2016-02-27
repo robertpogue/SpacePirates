@@ -5,7 +5,6 @@
 #include "Input.h"
 #include "Platform.h"
 #include "Point.h"
-#include "Time.h"
 #include <cmath>
 #include <algorithm>
 
@@ -18,10 +17,7 @@ Ship::Ship(Player p, float mass) : booster(false), player(p),
     setMass(mass);
 };
 
-void Ship::update() {
-	// time elapsed since last update
-	long deltaT = getTime() - lastUpdate; // ms
-	lastUpdate = getTime();
+void Ship::update(int deltaT) {
 
 	// apply booster force
 	if(booster) {
@@ -34,7 +30,7 @@ void Ship::update() {
         setRot(getRot() - turnRate * deltaT/1000);
 
 	// allow rigidbody to simulate physics
-	RigidBody::update();
+	RigidBody::update(deltaT);
 }
 
 /*void Ship::draw(Graphics& graphics) {

@@ -12,10 +12,9 @@ class RigidBody {
 	float yVel;
 	float mass;
 	float rot;
-	long lastUpdate;
 public:
 	RigidBody(Point, float Mass=10, int Radius=7);
-	virtual void update(); // simulate physics
+	virtual void update(int delta); // simulate physics
 	virtual void onCollision(const RigidBody& other) { };
 
 	void applyForce(float xComponent, // kg*px/s/s
