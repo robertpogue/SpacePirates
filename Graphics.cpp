@@ -8,7 +8,7 @@ Graphics::Graphics() {
     int result = SDL_Init(SDL_INIT_VIDEO);
     assert(result == 0);
 
-    window = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Space Pirates", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
     assert(window);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);

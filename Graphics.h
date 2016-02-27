@@ -13,14 +13,10 @@ public:
     void    clear();
     int     getHeight(); // px
     // will place center of texture at destination point
-    // point is in pixels from bottom left of screen
+    // destination is in pixels from bottom left of screen
     void blit(const Texture&, Point destination, float rotation);
     void present();
-    //void triangle(const Point& p1, 
-        //const Point& p2,
-        //const Point& p3,
-        //const Color& c);
-    //void writeText(std::string text, int xPos, int yPos);
+    void writeText(std::string text, int xPos, int yPos);
     //void flip();
 private:
     SDL_Window* window;
