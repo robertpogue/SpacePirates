@@ -10,5 +10,6 @@ public:
 	GameObject();
 	GameObject(Point p);
 	virtual void notify(Input::Event) { };
-	virtual void update() { };
+	virtual void update(int delta) { };
+    virtual void draw(Graphics&) {};
 };

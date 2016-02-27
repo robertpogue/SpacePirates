@@ -12,7 +12,6 @@ Ship::Ship(Player p, float mass) : booster(false), player(p),
                        rotatingClockwise(false),
 					   rotatingCounterclockwise(false),
 					   hasGold(false) {
-	//lastUpdate = getTime();
 	setCollisionRadius(14);
     setMass(mass);
 };
@@ -33,18 +32,17 @@ void Ship::update(int deltaT) {
 	RigidBody::update(deltaT);
 }
 
-/*void Ship::draw(Graphics& graphics) {
-	Point shipTop(0,12);
-	shipTop = rotateAboutOrigin(shipTop, getRot());
-	Point shipBottomRight(6,-8);
-	shipBottomRight = rotateAboutOrigin(shipBottomRight, getRot());
-	Point shipBottomLeft(-6,-8);
-	shipBottomLeft = rotateAboutOrigin(shipBottomLeft, getRot());
-	Graphics::triangle(shipTop + getPos(),
-		               shipBottomLeft + getPos(),
-					   shipBottomRight + getPos(),
-					   color);
-	if(booster) {
+Texture Ship::getTexture() const {
+    return texture;
+}
+
+void Ship::setTexture(Texture t) {
+    texture = t;
+}
+
+void Ship::draw(Graphics& graphics) {
+    graphics.blit(texture, getPos(), getRot());
+	/*if(booster) {
 		Point flameBottomRight(-4,-6);
 		Point flameBottomLeft(4,-6);
 		Point flameTop(0,-20);
@@ -55,8 +53,8 @@ void Ship::update(int deltaT) {
 			               flameBottomRight + getPos(),
 						   flameTop + getPos(),
 						   Color(200,200,40));
-	}
-	if(hasGold) {
+	}*/
+	/*if(hasGold) {
 		Point goldBottomRight(2,-4);
 		Point goldBottomLeft(-2,-4);
 		Point goldTop(0,5);
@@ -67,8 +65,8 @@ void Ship::update(int deltaT) {
 			               goldBottomRight + getPos(),
 						   goldTop + getPos(),
 						   Color(255,255,255));
-	}
-}*/
+	}*/
+}
 
 void Ship::notify(Input::Event e) {
 	if(player == Player::One) {

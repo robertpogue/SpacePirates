@@ -2,12 +2,14 @@
 #include <exception>
 #include <string>
 #include <assert.h>
+#include <memory>
 
 #include "Graphics.h"
 #include "Input.h"
 #include "Level.h"
 #include "Ship.h"
 #include "Time.h"
+using namespace std;
 
 int main(int argc, char ** argv) {
     // variables on the stack
@@ -19,9 +21,17 @@ int main(int argc, char ** argv) {
     Level level;
     Time time;
 
-    
+    // load level
     level.setForeground(graphics.load("levels/mountains.bmp"));
-    level.setBackground(graphics.load("levels/dark_n_stormy.bmp"));
+    level.setBackground(graphics.load("levels/summer_sky.bmp"));
+    auto player1 = make_unique<Ship>();
+    auto player2 = make_unique<Ship>(Player::Two);
+    player1->setPos(Point(50, 250));
+    player2->setPos(Point(100, 250));
+    player1->setTexture(graphics.load("ships/ship1.bmp"));
+    player2->setTexture(graphics.load("ships/ship2.bmp"));
+    level.add(move(player1));
+    level.add(move(player2));
 
     // rendering loop
     while(!quit) {

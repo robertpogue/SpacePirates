@@ -12,43 +12,40 @@
 // declare utility functions
 bool areColliding(const GameObject& c1, const GameObject& c2);
 
-Level::Level() : gravity(-10), player2(Player::Two) {
-    player1.setPos(Point(50, 250));
-    player2.setPos(Point(100, 250));
+Level::Level() : gravity(-10) {
+    
+}
+void Level::add(std::unique_ptr<GameObject> gameObject) {
+    gameObjects.push_back(std::move(gameObject));
 }
 
-//void Level::add(Ship s) {
-    //player1 = s;
-//}
-
 void Level::update(int delta) {
-    // apply gravity
-    float gravityForce = gravity * player1.getMass();
-    player1.applyForce(0.f, gravityForce);
-    player2.applyForce(0.f, gravityForce);
-    player1.update(delta);
-    player2.update(delta);
+    for(auto& object : gameObjects) {
+        // apply gravity
+        float gravityForce = gravity * object->getMass();
+        object->applyForce(0.f, gravityForce);
 
-    if(areColliding(player1, player2)) {
+        // allow object to update
+        object->update(delta);
+    }
+    
+
+    /*if(areColliding(player1, player2)) {
         player1.setPos(Point(50, 150));
         player1.setXVel(0);
         player1.setYVel(0);
         player2.setPos(Point(100, 150));
         player2.setXVel(0);
         player2.setYVel(0);
-    }
+    }*/
 }
 
 void Level::draw(Graphics& graphics) {
     graphics.blit(background, Point(0, 700), 0);
-    Texture texture1 = graphics.load("ships/ship-test.bmp");
-    Texture texture2 = graphics.load("ships/ship1.bmp");
-
+    for(auto& object : gameObjects) {
+        object->draw(graphics);
+    }
     graphics.blit(foreground, Point(0, 700), 0);
-    graphics.blit(texture1, player1.getPos(), player1.getRot());    
-    graphics.blit(texture2, player2.getPos(), player2.getRot());
-    
-
 }
 
 void Level::setForeground(Texture t) {
@@ -111,17 +108,10 @@ void Level::notify(Input::Event e) {
 	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		//gameObjects.at(i)->notify(e);
 	//}
-    player1.notify(e);
-    player2.notify(e);
+    for(auto& object : gameObjects) {
+        object->notify(e);
+    }
 }
-
-
-//void Level::applyGravity() {
-	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		//float gravityForce = gravityAcceleration * gameObjects.at(i)->getMass();
-		//gameObjects.at(i)->applyForce(0.f, gravityForce);
-	//}
-//}
 
 //void Level::detectCollisions() {
 	/*for(unsigned int i = 0; i < gameObjects.size(); i++) {

@@ -4,7 +4,8 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "Point.h"
-//#include "Texture.h"
+#include "Texture.h"
+#include "Graphics.h"
 
 enum class Player {One, Two };
 
@@ -21,8 +22,11 @@ public:
 	void setSpawn(Point);
 	//void setColor(Color);
 	void update(int delta); // time elapsed in ms
+    Texture getTexture() const;
+    void    setTexture(Texture);
+    void    draw(Graphics&);
 private:
-	//Texture texture;
+	Texture texture;
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;
