@@ -28,6 +28,10 @@ Texture Graphics::load(std::string path) {
     SDL_Surface* bmp = SDL_LoadBMP(path.c_str());
     assert(bmp);
 
+    // set key color (treated as transparent)
+    Uint32 colorKey = SDL_MapRGB(bmp->format, 255, 0, 255);
+    SDL_SetColorKey(bmp, SDL_TRUE, colorKey);
+
     Texture t(SDL_CreateTextureFromSurface(renderer, bmp));
     SDL_FreeSurface(bmp);
 
