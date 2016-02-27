@@ -2,14 +2,13 @@
 
 ### Build Instructions
 ####Windows:
-  Build with Visual Studio 2012. For distribution, build Release version, then copy library DLLs and images to
-  the same directory as the EXE file.
+  Build with Visual Studio 201 and copy library DLLs the same directory as the EXE file.
 
-Linux:
+####Linux:
   sudo apt-get install freeglut3-dev libsdl1.2-dev libsdl-image1.2-dev
   make
 
-Debian package:
+####Debian package:
   Ensure files in debian directory are correct (esp. control, spacepirates.dirs)
 
  start in the main source directory named [directoryName]
