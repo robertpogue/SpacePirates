@@ -46,6 +46,7 @@ void Level::draw(Graphics& graphics) {
     graphics.blit(texture1, player1.getPos(), player1.getRot());    
     graphics.blit(texture2, player2.getPos(), player2.getRot());
 
+    graphics.writeText("hello world!", Point(300, 300));
 }
 //void Level::loadLevel(std::string path) {
 	/*Color blockColor(0,0,0);

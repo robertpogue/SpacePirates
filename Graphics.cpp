@@ -1,11 +1,14 @@
 #include "Graphics.h"
 #include <assert.h>
+#include "SDL_ttf.h"
 
 // file-scope variables
 static SDL_Window* window = NULL;
 
 Graphics::Graphics() {
     int result = SDL_Init(SDL_INIT_VIDEO);
+    assert(result == 0);
+    result = TTF_Init();
     assert(result == 0);
 
     window = SDL_CreateWindow("Space Pirates", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
@@ -64,4 +67,17 @@ void Graphics::blit(const Texture& texture, Point destination, float rotation) {
 
 void Graphics::present() {
     SDL_RenderPresent(renderer);
+}
+
+void Graphics::writeText(std::string text, Point destination) {
+    int fontsize = 12;
+    SDL_Color color{ 100, 100, 100, 100 }; // rgba
+    //TODO RAII
+    TTF_Font* font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", 12);
+    SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), color);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    blit(texture, destination, 0);
+    TTF_CloseFont(font);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }

@@ -16,8 +16,7 @@ public:
     // destination is in pixels from bottom left of screen
     void blit(const Texture&, Point destination, float rotation);
     void present();
-    void writeText(std::string text, int xPos, int yPos);
-    //void flip();
+    void writeText(std::string text, Point destination);
 private:
     SDL_Window* window;
     SDL_Renderer* renderer; //TODO raii
