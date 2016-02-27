@@ -49,8 +49,8 @@ void Graphics::blit(const Texture& texture, Point destination, float rotation) {
     SDL_Rect dest;
     dest.x = (int)destination.x;
     dest.y = (int)destination.y;
-    dest.w = 20;
-    dest.h = 20;
+    dest.w = texture.getWidth();
+    dest.h = texture.getHeight();;
     
 
     SDL_RenderCopyEx(renderer,

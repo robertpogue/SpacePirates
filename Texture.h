@@ -11,8 +11,8 @@ public:
     SDL_Texture* sdlTexture() const; // do NOT keep a copy of this pointer
 	//void load(std::string path);
 	//Color getPixel(int x, int y);
-	//int width() { return imageData->w; }
-	//int height() { return imageData->h; }
+    int getWidth() const;
+    int getHeight() const;
 
 private:
     //std::shared_ptr<SDL_Surface> imageData;
