@@ -41,8 +41,8 @@ void Level::update(int delta) {
 
 void Level::draw(Graphics& graphics) {
     graphics.blit(background, Point(0, 700), 0);
-    Texture texture1 = graphics.load("ships/ship1.bmp");
-    Texture texture2 = graphics.load("ships/ship2.bmp");
+    Texture texture1 = graphics.load("ships/ship-test.bmp");
+    Texture texture2 = graphics.load("ships/ship1.bmp");
 
     graphics.blit(foreground, Point(0, 700), 0);
     graphics.blit(texture1, player1.getPos(), player1.getRot());    

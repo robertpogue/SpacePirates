@@ -21,7 +21,7 @@ int main(int argc, char ** argv) {
 
     
     level.setForeground(graphics.load("levels/mountains.bmp"));
-    level.setBackground(graphics.load("levels/summer_sky.bmp"));
+    level.setBackground(graphics.load("levels/dark_n_stormy.bmp"));
 
     // rendering loop
     while(!quit) {
