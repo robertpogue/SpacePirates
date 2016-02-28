@@ -35,9 +35,11 @@ void Level::update(int delta) {
         player1.setPos(Point(50, 150));
         player1.setXVel(0);
         player1.setYVel(0);
+        player1.setRot(0);
         player2.setPos(Point(100, 150));
         player2.setXVel(0);
         player2.setYVel(0);
+        player2.setRot(0);
     }*/
 }
 
