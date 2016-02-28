@@ -4,6 +4,15 @@
 
 const static float PI = 3.14159f;
 
+bool areColliding(RigidBody const* const c1, RigidBody const* const c2) {
+    Point difference = c1->getPosition() - c2->getPosition();
+    int radiusSquared = c1->getCollisionRadius() * c1->getCollisionRadius() +
+        c2->getCollisionRadius() * c2->getCollisionRadius();
+    if(difference.squareMagnitude() < radiusSquared)
+        return true;
+    else return false;
+}
+
 RigidBody::RigidBody(Point pos, float m, int r) : dynamic(false), pos(pos),
 								                  collisionRadius(r), 
 												  mass(m), xVel(0), 
@@ -38,11 +47,11 @@ void RigidBody::setDynamic(bool d) {
 	dynamic = d;
 }
 
-Point RigidBody::getPos() const {
+Point RigidBody::getPosition() const {
 	return pos;
 }
 
-void RigidBody::setPos(Point p) {
+void RigidBody::setPosition(Point p) {
 	pos = p;
 }
 
@@ -94,11 +103,11 @@ void RigidBody::setMass(float m) {
 	mass = m;
 }
 
-float RigidBody::getRot() {
+float RigidBody::getRotation() {
 	return rot;
 }
 
-void RigidBody::setRot(float r) {
+void RigidBody::setRotation(float r) {
 	rot = r;
 	// keep rotation between -pi and pi
 	if(rot > PI) 

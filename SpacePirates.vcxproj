@@ -161,7 +161,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Ship.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
@@ -177,7 +177,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Ship.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

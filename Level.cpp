@@ -4,7 +4,7 @@
 #include "Gold.h"
 #include "GameObject.h"
 #include "Graphics.h"
-#include "Texture.h"
+#include "Image.h"
 #include "Platform.h"
 #include "Point.h"
 #include "Ship.h"
@@ -30,6 +30,7 @@ void Level::update(int delta) {
     }
     
 
+    //a
     /*if(areColliding(player1, player2)) {
         player1.setPos(Point(50, 150));
         player1.setXVel(0);
@@ -41,68 +42,21 @@ void Level::update(int delta) {
 }
 
 void Level::draw(Graphics& graphics) {
-    graphics.blit(background, Point(0, 700), 0);
+    Point screenCenter{ graphics.screenWidth / 2, graphics.screenHeight / 2 };
+    graphics.blit(background, screenCenter, 0);
+    graphics.blit(level, screenCenter, 0);
     for(auto& object : gameObjects) {
         object->draw(graphics);
     }
-    graphics.blit(foreground, Point(0, 700), 0);
 }
 
-void Level::setForeground(Texture t) {
-    foreground = t;
+void Level::setLevel(Image i) {
+    level = i;
 }
 
-void Level::setBackground(Texture t) {
+void Level::setBackground(Image t) {
     background = t;
 }
-//void Level::loadLevel(std::string path) {
-	/*Color blockColor(0,0,0);
-	Color player1Color(150,150,255);
-	Color player2Color(255,0,0);
-	Color goldColor(255,255,0);
-	Color platformColor(0,255,0);
-	Color groundColor(204,102,51 );
-	gravityAcceleration = -20.0f; // kg*px/s/s
-
-	Texture image;
-	image.load(path.c_str());
-	Color color = image.getPixel(0,0);
-	for(int w = 0; w < image.width(); w++) {
-		for(int h=0; h < image.height(); h++) {
-            float xPx = Block::size/2.0f + (w*Block::size);
-			float yPx = (image.height()*Block::size) - (Block::size/2.0f + (h*Block::size));
-			Color px = image.getPixel(w,h);
-			if( px == blockColor) {
-				std::shared_ptr<Block> block(new Block(Point(xPx, yPx)));
-				block->color = blockColor;
-				gameObjects.push_back(block);
-			} else if(px == player1Color) {
-				std::shared_ptr<Ship> p1(new Ship(PLAYER_ONE));
-				p1->setColor(player1Color);
-				p1->setDynamic(true);
-				p1->setSpawn(Point(xPx, yPx));
-				gameObjects.push_back(p1);
-			} else if(px == player2Color) {
-				std::shared_ptr<Ship> p2(new Ship(PLAYER_TWO));
-				p2->setColor(player2Color);
-				p2->setSpawn(Point(xPx, yPx));
-				p2->setDynamic(true);
-				gameObjects.push_back(p2);
-			} else if(px == goldColor) {
-				std::shared_ptr<Gold> gold(new Gold(Point(xPx, yPx)));
-				gameObjects.push_back(gold);
-			} else if(px == platformColor) {
-				std::shared_ptr<Platform> platform(new Platform(Point(xPx, yPx)));
-				gameObjects.push_back(platform);
-			} else if(px == groundColor) {
-        //TODO: this probably calls for a new Ground class
-				std::shared_ptr<Block> block(new Block(Point(xPx, yPx)));
-				block->color = groundColor;
-				gameObjects.push_back(block);
-			}
-		}
-	}*/
-//}
 
 void Level::notify(Input::Event e) {
 	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
@@ -113,24 +67,17 @@ void Level::notify(Input::Event e) {
     }
 }
 
-//void Level::detectCollisions() {
-	/*for(unsigned int i = 0; i < gameObjects.size(); i++) {
+void Level::detectCollisions() {
+	for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		if(!gameObjects[i]->isDynamic()) continue;
-		for(unsigned int j = 0; j < gameObjects.size(); j++) {
+		for(unsigned int j = i+1; j < gameObjects.size(); j++) {
 			if(i==j) continue; // don't test for self-colision
 			if(areColliding(gameObjects[i].get(), gameObjects[j].get())) {
 				gameObjects[i]->onCollision(*gameObjects[j]);
 				gameObjects[j]->onCollision(*gameObjects[i]);
 			}
 		}
-	}*/
-//}
-
-bool areColliding(const GameObject& c1, const GameObject& c2) {
-	Point difference = c1.getPos()-c2.getPos();
-	int radiusSquared = c1.getCollisionRadius() * c1.getCollisionRadius() + 
-		                c2.getCollisionRadius() * c2.getCollisionRadius();
-	if(difference.squareMagnitude() < radiusSquared)
-		return true;
-	else return false;
+	}
 }
+
+

@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Input.h"
-#include "Texture.h"
+#include "Image.h"
 #include "GameObject.h"
 
 class Level {
@@ -13,11 +13,13 @@ public:
 	void update(int delta);
     void draw(Graphics&);
     void notify(Input::Event e);
-    void setForeground(Texture);
-    void setBackground(Texture);
+    void setLevel(Image);
+    void setBackground(Image);
 private:
     std::vector<std::unique_ptr<GameObject>> gameObjects;
-    Texture foreground; // collidable
-    Texture background; // pretty
+    Image level; // collidable
+    Image background; // pretty
 	float gravity; // kg*px/s/s
+
+    void detectCollisions();
 };

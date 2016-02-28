@@ -1,6 +1,8 @@
 #include "Graphics.h"
 #include <assert.h>
+#include <memory>
 #include "SDL_ttf.h"
+#include "Image.h"
 
 // file-scope variables
 static SDL_Window* window = NULL;
@@ -11,7 +13,7 @@ Graphics::Graphics() {
     result = TTF_Init();
     assert(result == 0);
 
-    window = SDL_CreateWindow("Space Pirates", 100, 100, 1000, 700, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Space Pirates", 100, 100, screenWidth, screenHeight, SDL_WINDOW_SHOWN);
     assert(window);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -24,40 +26,33 @@ Graphics::~Graphics() {
     SDL_Quit();
 }
 
-Texture Graphics::load(std::string path) {
-    SDL_Surface* bmp = SDL_LoadBMP(path.c_str());
-    assert(bmp);
-
-    // set key color (treated as transparent)
-    Uint32 colorKey = SDL_MapRGB(bmp->format, 255, 0, 255);
-    SDL_SetColorKey(bmp, SDL_TRUE, colorKey);
-
-    Texture t(SDL_CreateTextureFromSurface(renderer, bmp));
-    SDL_FreeSurface(bmp);
-
-    return t;
-}
-
 void Graphics::clear() {
     SDL_RenderClear(renderer);
 }
 
-int Graphics::getHeight() {
+int Graphics::getHeight() const {
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
     return h;
 }
 
-void Graphics::blit(const Texture& texture, Point destination, float rotation) {
+void Graphics::blit(const Image& texture, Point destination, float rotation) {
     // convert from Graphics coordinate system (origin at bottom left)
     // to SDL coordinate system (origin at top left)
-    destination.y = -destination.y + getHeight();
+    toSDLCoordinates(destination);
     rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
     SDL_Rect dest;
     dest.x = (int)destination.x;
     dest.y = (int)destination.y;
-    dest.w = texture.getWidth();
-    dest.h = texture.getHeight();;
+
+    // sdl positions the texture's top left corner at dest
+    // we would like to position the texture's center at dest
+    // subtract half width and half height
+    dest.x -= texture.getWidth()/2;
+    dest.y -= texture.getHeight()/2;
+
+    dest.w = texture.getWidth(); // maintain texture size
+    dest.h = texture.getHeight();
     
 
     SDL_RenderCopyEx(renderer,
@@ -69,19 +64,27 @@ void Graphics::blit(const Texture& texture, Point destination, float rotation) {
                      SDL_FLIP_NONE );
 }
 
+void Graphics::drawPoint(Point p) {
+    toSDLCoordinates(p);
+    SDL_RenderDrawPoint(renderer, (int)p.x, (int)p.y);
+}
+
 void Graphics::present() {
     SDL_RenderPresent(renderer);
 }
 
 void Graphics::writeText(std::string text, Point destination) {
     int fontsize = 12;
-    SDL_Color color{ 200, 200, 200, 200 }; // rgba
+    SDL_Color color{ 50, 50, 50, 200 }; // rgba
     //TODO RAII
     TTF_Font* font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", 12);
-    SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), color);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    blit(texture, destination, 0);
+    SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    Image textImage(surface, texture);
+    blit(textImage, destination, 0);
     TTF_CloseFont(font);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
+}
+
+void Graphics::toSDLCoordinates(Point& p) const {
+    p.y = -p.y + getHeight();
 }

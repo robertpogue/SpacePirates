@@ -9,6 +9,7 @@
 #include "Level.h"
 #include "Ship.h"
 #include "Time.h"
+#include "Image.h"
 using namespace std;
 
 int main(int argc, char ** argv) {
@@ -22,14 +23,14 @@ int main(int argc, char ** argv) {
     Time time;
 
     // load level
-    level.setForeground(graphics.load("levels/mountains.bmp"));
-    level.setBackground(graphics.load("levels/summer_sky.bmp"));
+    level.setLevel(Image("levels/mountains.bmp", graphics));
+    level.setBackground(Image("levels/summer_sky.bmp", graphics));
     auto player1 = make_unique<Ship>();
     auto player2 = make_unique<Ship>(Player::Two);
-    player1->setPos(Point(50, 250));
-    player2->setPos(Point(100, 250));
-    player1->setTexture(graphics.load("ships/ship1.bmp"));
-    player2->setTexture(graphics.load("ships/ship2.bmp"));
+    player1->setPosition(Point(50, 250));
+    player2->setPosition(Point(100, 250));
+    player1->setImage(Image("ships/ship1.bmp", graphics));
+    player2->setImage(Image("ships/ship2.bmp", graphics));
     level.add(move(player1));
     level.add(move(player2));
 
@@ -37,7 +38,7 @@ int main(int argc, char ** argv) {
     while(!quit) {
         // calculate framerate
         int frameTime = time.frame();
-        int fps = round(1000.f / frameTime);
+        int fps = (int)round(1000.f / frameTime);
 
         do { // handle input
             e = Input::nextInput();
@@ -47,7 +48,7 @@ int main(int argc, char ** argv) {
         graphics.clear();
         level.update(frameTime);
         level.draw(graphics);
-        graphics.writeText(std::to_string(fps) + " fps", Point(5, graphics.getHeight() - 2.f));
+        graphics.writeText(std::to_string(fps) + " fps", Point(25, graphics.getHeight() - 10.f));
         graphics.present();
     }
     return 0;

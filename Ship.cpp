@@ -21,27 +21,28 @@ void Ship::update(int deltaT) {
 	// apply booster force
 	if(booster) {
 		const float boosterForce = 900.0f; // kg*px/s/s
-		applyForce(-sin(getRot()) * boosterForce, cos(getRot()) * boosterForce);
+		applyForce(-sin(getRotation()) * boosterForce, cos(getRotation()) * boosterForce);
 	}
 	float turnRate = 5;// radians/second
-	if(rotatingClockwise) setRot(getRot() + turnRate * deltaT/1000);
+	if(rotatingClockwise) setRotation(getRotation() + turnRate * deltaT/1000);
 	if(rotatingCounterclockwise) 
-        setRot(getRot() - turnRate * deltaT/1000);
+        setRotation(getRotation() - turnRate * deltaT/1000);
 
 	// allow rigidbody to simulate physics
 	RigidBody::update(deltaT);
 }
 
-Texture Ship::getTexture() const {
-    return texture;
+Image Ship::getImage() const {
+    return image;
 }
 
-void Ship::setTexture(Texture t) {
-    texture = t;
+void Ship::setImage(Image i) {
+    image = i;
 }
 
 void Ship::draw(Graphics& graphics) {
-    graphics.blit(texture, getPos(), getRot());
+    graphics.blit(image, getPosition(), getRotation());
+    graphics.drawPoint(getPosition());
 	/*if(booster) {
 		Point flameBottomRight(-4,-6);
 		Point flameBottomLeft(4,-6);
@@ -107,16 +108,16 @@ void Ship::onCollision(const RigidBody& other) {
 	if( relativeYVel > -20 && // decending slowly
 		relativeXVel < 10 &&   // relative to ground
 		relativeXVel > -10 &&
-		getRot() < .4f &&  // vertically oriented
-		getRot() > -.4f &&
-		getPos().y > other.getPos().y // must be above block
+		getRotation() < .4f &&  // vertically oriented
+		getRotation() > -.4f &&
+		getPosition().y > other.getPosition().y // must be above block
 		) 
 	{
 		//neutralize downward force
 		setYForce(std::max(0.f, getYForce())); 
 		setYVel(std::max(0.f, getYVel()));
 		setXVel(0);
-		setRot(0);
+		setRotation(0);
 	}
 	else reset();
 }
@@ -124,8 +125,8 @@ void Ship::onCollision(const RigidBody& other) {
 void Ship::reset() {
 	setXVel(0);
 	setYVel(0);
-	setPos(spawn);
-	setRot(0);
+	setPosition(spawn);
+	setRotation(0);
 	hasGold = false;
 }
 // private members
@@ -137,5 +138,5 @@ Point Ship::rotateAboutOrigin(Point p, float radians) {
 
 void Ship::setSpawn(Point sp) {
     spawn = sp;
-    setPos(spawn);
+    setPosition(spawn);
 }

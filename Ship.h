@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "Point.h"
-#include "Texture.h"
+#include "Image.h"
 #include "Graphics.h"
 
 enum class Player {One, Two };
@@ -18,15 +18,15 @@ public:
 	void notify(Input::Event);
     //void setTexture(Texture& t);
 	// inherited from RigidBody
-	void onCollision(const RigidBody& other);
-	void setSpawn(Point);
-	//void setColor(Color);
-	void update(int delta); // time elapsed in ms
-    Texture getTexture() const;
-    void    setTexture(Texture);
+	void    onCollision(const RigidBody& other);
+	void    setSpawn(Point);
+	//void  setColor(Color);
+	void    update(int delta); // time elapsed in ms
+    Image   getImage() const;
+    void    setImage(Image);
     void    draw(Graphics&);
 private:
-	Texture texture;
+	Image image;
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;
