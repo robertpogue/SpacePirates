@@ -5,8 +5,14 @@
   Build with Visual Studio 201 and copy library DLLs the same directory as the EXE file.
 
 ####Linux:
-  sudo apt-get install freeglut3-dev libsdl1.2-dev libsdl-image1.2-dev
+  sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+
+  mkdir build && cd build
+  cmake ..
   make
+
+  Then, to run:
+  ./bin/SpacePirates
 
 ####Debian package:
   Ensure files in debian directory are correct (esp. control, spacepirates.dirs)
