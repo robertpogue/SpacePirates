@@ -1,4 +1,5 @@
 #include "Image.h"
+#include <algorithm>    // std::min
 #include <assert.h>
 #include "Graphics.h"
 
@@ -23,6 +24,28 @@ Image::Image(SDL_Surface* s, SDL_Texture* t) {
 
 SDL_Texture* Image::sdlTexture() const {
     return texture.get();
+}
+
+Color Image::getPixel(Point p) {
+    // sdl has origin at top left, +y down
+    // spacepirates considers origin to to be center +y up
+    //p.y = -p.y + getHeight();
+    //p.x += getWidth() / 2.f;
+    //p.y += getHeight() / 2.f;
+
+    int x = (int)round(p.x); // nearest pixel
+    int y = (int)round(p.y);
+
+    // clamp to range (0,0) to (width, height)
+    x = std::min(x, getWidth());
+    x = std::max(x, 0);
+    y = std::min(y, getHeight());
+    y = std::max(y, 0);
+    Uint32* pixels = (Uint32*)surface->pixels;
+    Uint8 r, g, b, a;
+    SDL_GetRGBA(pixels[(y*surface->w) + x], surface->format, &r, &g, &b, &a);
+    return Color(r, g, b); // TODO add alpha chanel
+
 }
 
 int Image::getWidth() const {

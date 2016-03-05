@@ -46,7 +46,7 @@ void Graphics::blit(const Image& texture, Point destination, float rotation) {
     dest.y = (int)destination.y;
 
     // sdl positions the texture's top left corner at dest
-    // we would like to position the texture's center at dest
+    // we would like to position the texture's center at dest.
     // subtract half width and half height
     dest.x -= texture.getWidth()/2;
     dest.y -= texture.getHeight()/2;

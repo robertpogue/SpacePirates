@@ -27,15 +27,20 @@ void Level::update(int delta) {
 
         // allow object to update
         object->update(delta);
+        Color c = level.getPixel(object->getPosition());
+        Color none = Color(255, 0, 255);
+        if(!(c == none)) {
+            object->setPosition(Point(50, 150));
+            object->setXVel(0);
+            object->setYVel(0);
+            object->setRotation(0);
+        }
     }
     
+    
 
-    //a
     /*if(areColliding(player1, player2)) {
-        player1.setPos(Point(50, 150));
-        player1.setXVel(0);
-        player1.setYVel(0);
-        player1.setRot(0);
+
         player2.setPos(Point(100, 150));
         player2.setXVel(0);
         player2.setYVel(0);
