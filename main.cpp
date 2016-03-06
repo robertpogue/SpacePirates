@@ -22,8 +22,10 @@ int main(int argc, char ** argv) {
         level.setBackground(graphics.load("levels/summer_sky.bmp"));
         auto player1 = Ship();
         auto player2 = Ship(Player::Two);
-        player1.setPosition(Point(50, 250));
-        player2.setPosition(Point(100, 250));
+        player1.setSpawn(Point(50, 250));
+        player1.respawn();
+        player2.setSpawn(Point(100, 250));
+        player2.respawn();
         player1.setImage(graphics.load("ships/ship1.bmp"));
         player2.setImage(graphics.load("ships/ship2.bmp"));
         level.add(player1);

@@ -48,7 +48,7 @@ Color Image::getPixel(Point p) {
     Uint32* pixels = (Uint32*)surface->pixels;
     Uint8 r, g, b, a;
     SDL_GetRGBA(pixels[(y*surface->w) + x], surface->format, &r, &g, &b, &a);
-    return Color(r, g, b); // TODO add alpha chanel
+    return Color(r, g, b); // FUTURE add alpha chanel
 
 }
 
