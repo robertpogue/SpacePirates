@@ -10,16 +10,14 @@ Image::Image() : texture(nullptr), surface(nullptr) {}
 
 Image::Image(std::string path, SDL_Renderer* renderer)
 : texture(nullptr), surface(nullptr) {
-    //TODO fix
-    SDL_Surface* s = SDL_LoadBMP(path.c_str());
-    surface = std::shared_ptr<SDL_Surface>(s, SDL_FreeSurface);
+    surface = std::shared_ptr<SDL_Surface>(SDL_LoadBMP(path.c_str(), SDL_FreeSurface);
     // set key color (treated as transparent)
-    Uint32 colorKey = SDL_MapRGB(s->format, 255, 0, 255);
-    SDL_SetColorKey(s, SDL_TRUE, colorKey);
+    Uint32 colorKey = SDL_MapRGB(surface->format, 255, 0, 255);
+    SDL_SetColorKey(surface.get(), SDL_TRUE, colorKey);
 
-    SDL_Texture* t = SDL_CreateTextureFromSurface(
-        renderer, surface.get());
-    texture = std::shared_ptr<SDL_Texture>(t, SDL_DestroyTexture);
+    texture = std::shared_ptr<SDL_Texture>(
+        SDL_CreateTextureFromSurface(renderer, surface.get()),
+        SDL_DestroyTexture);
 }
 
 Image::Image(SDL_Surface* s, SDL_Texture* t) {
