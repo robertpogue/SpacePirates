@@ -19,9 +19,14 @@ Graphics::Graphics() {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     assert(renderer);
+
+    int fontSize = 12;
+    font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", fontSize);
+
 }
 
 Graphics::~Graphics() {
+    TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -80,15 +85,11 @@ void Graphics::draw(Ship ship) {
 }
 
 void Graphics::draw(std::string text, Point destination) {
-    int fontsize = 12;
     SDL_Color color{ 50, 50, 50, 200 }; // rgba
-                                        //TODO RAII and cache font
-    TTF_Font* font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", 12);
     SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     Image textImage(surface, texture);
     blit(textImage, destination, 0);
-    TTF_CloseFont(font);
 }
 
 void Graphics::present() {

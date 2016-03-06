@@ -1,12 +1,16 @@
 #pragma once
 #include <string>
+#include <memory>
 
 #include "Point.h"
 #include "Ship.h"
 
+// forward declare
 class Image;
 struct SDL_Window;
 struct SDL_Renderer;
+struct _TTF_Font;
+typedef struct _TTF_Font TTF_Font;
 
 class Graphics {
 public:
@@ -28,7 +32,7 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-
+    TTF_Font* font;
     // utility functions
     void toSDLCoordinates(Point& p) const; // modifies p
 };

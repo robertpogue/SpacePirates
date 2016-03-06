@@ -9,7 +9,10 @@
 #include "Point.h"
 #include "Ship.h"
 
-Level::Level() : gravity(-10) {
+Level::Level() 
+    : gravity(-10),
+    levelHeightPx(0),
+    levelWidthPx(0) {
     
 }
 void Level::add(Ship ship) {
@@ -27,8 +30,8 @@ void Level::update(int delta) {
         
         // keep ship within level bounds
         Point position = ship.getPosition();
-        if( position.x < 0 || position.x > size.x ||
-            position.y < 0 || position.y > size.y) {
+        if( position.x < 0 || position.x > levelWidthPx ||
+            position.y < 0 || position.y > levelHeightPx) {
             ship.respawn();
         }
     }
@@ -46,7 +49,8 @@ void Level::draw(Graphics& graphics) {
 
 void Level::setLevel(Image i) {
     level = i;
-    size = Point(i.getWidth(), i.getHeight());
+    levelWidthPx = i.getWidth();
+    levelHeightPx = i.getHeight();
 }
 
 void Level::setBackground(Image t) {

@@ -19,6 +19,7 @@ private:
     std::vector<Ship> ships;
     Image level;      // collidable
     Image background; // pretty
-    Point size;       // level size in px
+    int levelWidthPx;
+    int levelHeightPx;
 	float gravity;    // kg*px/s/s
 };
