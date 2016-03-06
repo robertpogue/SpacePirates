@@ -10,7 +10,7 @@ Image::Image() : texture(nullptr), surface(nullptr) {}
 
 Image::Image(std::string path, SDL_Renderer* renderer)
 : texture(nullptr), surface(nullptr) {
-    surface = std::shared_ptr<SDL_Surface>(SDL_LoadBMP(path.c_str(), SDL_FreeSurface);
+    surface = std::shared_ptr<SDL_Surface>(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
     // set key color (treated as transparent)
     Uint32 colorKey = SDL_MapRGB(surface->format, 255, 0, 255);
     SDL_SetColorKey(surface.get(), SDL_TRUE, colorKey);
@@ -30,13 +30,14 @@ SDL_Texture* Image::sdlTexture() const {
 }
 
 Color Image::getPixel(Point p) {
-    // sdl has origin at top left, +y down
-    // spacepirates considers origin to to be center +y up
+    // sdl has origin at top left, +x right, +y down
+
     //p.y = -p.y + getHeight();
     //p.x += getWidth() / 2.f;
     //p.y += getHeight() / 2.f;
 
-    int x = (int)round(p.x); // nearest pixel
+    // round to nearest pixel
+    int x = (int)round(p.x);
     int y = (int)round(p.y);
 
     // clamp to range (0,0) to (width, height)
