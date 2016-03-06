@@ -1,11 +1,16 @@
 #include "Image.h"
 #include <algorithm>    // std::min
 #include <assert.h>
+#include "SDL.h"
+
 #include "Graphics.h"
+
 
 Image::Image() : texture(nullptr), surface(nullptr) {}
 
-Image::Image(std::string path, Graphics& g) {
+Image::Image(std::string path, SDL_Renderer* renderer)
+: texture(nullptr), surface(nullptr) {
+    //TODO fix
     SDL_Surface* s = SDL_LoadBMP(path.c_str());
     surface = std::shared_ptr<SDL_Surface>(s, SDL_FreeSurface);
     // set key color (treated as transparent)
@@ -13,7 +18,7 @@ Image::Image(std::string path, Graphics& g) {
     SDL_SetColorKey(s, SDL_TRUE, colorKey);
 
     SDL_Texture* t = SDL_CreateTextureFromSurface(
-        g.renderer, surface.get());
+        renderer, surface.get());
     texture = std::shared_ptr<SDL_Texture>(t, SDL_DestroyTexture);
 }
 

@@ -1,6 +1,7 @@
 #include "Graphics.h"
 #include <assert.h>
 #include <memory>
+#include "SDL.h"
 #include "SDL_ttf.h"
 #include "Image.h"
 
@@ -24,6 +25,10 @@ Graphics::~Graphics() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+Image Graphics::load(std::string path) {
+    return Image(path, renderer);
 }
 
 void Graphics::clear() {

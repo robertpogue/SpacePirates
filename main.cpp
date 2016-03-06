@@ -23,14 +23,14 @@ int main(int argc, char ** argv) {
     Time time;
 
     // load level
-    level.setLevel(Image("levels/mountains.bmp", graphics));
-    level.setBackground(Image("levels/summer_sky.bmp", graphics));
+    level.setLevel(graphics.load("levels/mountains.bmp"));
+    level.setBackground(graphics.load("levels/summer_sky.bmp"));
     auto player1 = Ship();
     auto player2 = Ship(Player::Two);
     player1.setPosition(Point(50, 250));
     player2.setPosition(Point(100, 250));
-    player1.setImage(Image("ships/ship1.bmp", graphics));
-    player2.setImage(Image("ships/ship2.bmp", graphics));
+    player1.setImage(graphics.load("ships/ship1.bmp"));
+    player2.setImage(graphics.load("ships/ship2.bmp"));
     level.add(player1);
     level.add(player2);
 
