@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "Point.h"
+#include "Ship.h"
 
 class Image;
 
@@ -12,12 +13,13 @@ public:
     ~Graphics();
     void    clear();
     int     getHeight() const; // px
-    // will place center of texture at destination point
+    // will place bottom left of texture at destination point
     // destination is in pixels from bottom left of screen
     void    blit(const Image&, Point destination, float rotation);
-    void    drawPoint(Point);
+    void    draw(Point);
+    void    draw(Ship);
+    void    draw(std::string text, Point destination);
     void    present();
-    void    writeText(std::string text, Point destination);
     static const int screenWidth = 1000;
     static const int screenHeight = 700;
     SDL_Renderer* renderer;

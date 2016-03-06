@@ -25,14 +25,14 @@ int main(int argc, char ** argv) {
     // load level
     level.setLevel(Image("levels/mountains.bmp", graphics));
     level.setBackground(Image("levels/summer_sky.bmp", graphics));
-    auto player1 = make_unique<Ship>();
-    auto player2 = make_unique<Ship>(Player::Two);
-    player1->setPosition(Point(50, 250));
-    player2->setPosition(Point(100, 250));
-    player1->setImage(Image("ships/ship1.bmp", graphics));
-    player2->setImage(Image("ships/ship2.bmp", graphics));
-    level.add(move(player1));
-    level.add(move(player2));
+    auto player1 = Ship();
+    auto player2 = Ship(Player::Two);
+    player1.setPosition(Point(50, 250));
+    player2.setPosition(Point(100, 250));
+    player1.setImage(Image("ships/ship1.bmp", graphics));
+    player2.setImage(Image("ships/ship2.bmp", graphics));
+    level.add(player1);
+    level.add(player2);
 
     // rendering loop
     while(!quit) {
@@ -48,7 +48,7 @@ int main(int argc, char ** argv) {
         graphics.clear();
         level.update(frameTime);
         level.draw(graphics);
-        graphics.writeText(std::to_string(fps) + " fps", Point(25, graphics.getHeight() - 10.f));
+        graphics.draw(std::to_string(fps) + " fps", Point(25, graphics.getHeight() - 10.f));
         graphics.present();
     }
     return 0;

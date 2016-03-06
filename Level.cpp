@@ -9,32 +9,31 @@
 #include "Point.h"
 #include "Ship.h"
 
-// declare utility functions
-bool areColliding(const GameObject& c1, const GameObject& c2);
-
 Level::Level() : gravity(-10) {
     
 }
-void Level::add(std::unique_ptr<GameObject> gameObject) {
-    gameObjects.push_back(std::move(gameObject));
+void Level::add(Ship ship) {
+    ships.push_back(ship);
 }
 
 void Level::update(int delta) {
-    for(auto& object : gameObjects) {
+    for(auto& ship : ships) {
         // apply gravity
-        float gravityForce = gravity * object->getMass();
-        object->applyForce(0.f, gravityForce);
+        float gravityForce = gravity * ship.getMass();
+        ship.applyForce(0.f, gravityForce);
 
         // allow object to update
-        object->update(delta);
-        Color c = level.getPixel(object->getPosition());
+        ship.update(delta);
+
+        // collision detection
+        /*Color c = level.getPixel(object->getPosition());
         Color none = Color(255, 0, 255);
         if(!(c == none)) {
             object->setPosition(Point(50, 150));
             object->setXVel(0);
             object->setYVel(0);
             object->setRotation(0);
-        }
+        }*/
     }
     
     
@@ -52,9 +51,9 @@ void Level::draw(Graphics& graphics) {
     Point screenCenter{ graphics.screenWidth / 2, graphics.screenHeight / 2 };
     graphics.blit(background, screenCenter, 0);
     graphics.blit(level, screenCenter, 0);
-    for(auto& object : gameObjects) {
-        object->draw(graphics);
-    }
+    for(auto ship : ships) {
+        graphics.draw(ship);
+    }  
 }
 
 void Level::setLevel(Image i) {
@@ -69,20 +68,17 @@ void Level::notify(Input::Event e) {
 	//for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		//gameObjects.at(i)->notify(e);
 	//}
-    for(auto& object : gameObjects) {
-        object->notify(e);
+    for(auto& ship : ships) {
+        ship.notify(e);
     }
 }
 
 void Level::detectCollisions() {
-	for(unsigned int i = 0; i < gameObjects.size(); i++) {
-		if(!gameObjects[i]->isDynamic()) continue;
-		for(unsigned int j = i+1; j < gameObjects.size(); j++) {
+	for(unsigned int i = 0; i < ships.size(); i++) {
+		if(!ships[i].isDynamic()) continue;
+		for(unsigned int j = i+1; j < ships.size(); j++) {
 			if(i==j) continue; // don't test for self-colision
-			if(areColliding(gameObjects[i].get(), gameObjects[j].get())) {
-				gameObjects[i]->onCollision(*gameObjects[j]);
-				gameObjects[j]->onCollision(*gameObjects[i]);
-			}
+			// test collisions
 		}
 	}
 }

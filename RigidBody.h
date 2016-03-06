@@ -25,9 +25,9 @@ public:
 	void  setXVel(float);
 	float getYVel() const;
 	void  setYVel(float);
-	float getMass();
+	float getMass() const;
 	void  setMass(float);
-	float getRotation();
+	float getRotation() const;
 	void  setRotation(float);
 private:
     bool  dynamic;
@@ -40,7 +40,3 @@ private:
     float mass;
     float rot;
 };
-
-// determines if two rigidbodies are collding
-// has no side-effects
-bool areColliding(RigidBody const* const, RigidBody const* const);

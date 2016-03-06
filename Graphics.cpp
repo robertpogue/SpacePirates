@@ -64,25 +64,30 @@ void Graphics::blit(const Image& texture, Point destination, float rotation) {
                      SDL_FLIP_NONE );
 }
 
-void Graphics::drawPoint(Point p) {
+void Graphics::draw(Point p) {
     toSDLCoordinates(p);
     SDL_RenderDrawPoint(renderer, (int)p.x, (int)p.y);
 }
 
-void Graphics::present() {
-    SDL_RenderPresent(renderer);
+void Graphics::draw(Ship ship) {
+    blit(ship.getImage(), ship.getPosition(), ship.getRotation());
+    draw(ship.getPosition());
 }
 
-void Graphics::writeText(std::string text, Point destination) {
+void Graphics::draw(std::string text, Point destination) {
     int fontsize = 12;
     SDL_Color color{ 50, 50, 50, 200 }; // rgba
-    //TODO RAII
+                                        //TODO RAII and cache font
     TTF_Font* font = TTF_OpenFont("DejaVuSans-ExtraLight.ttf", 12);
     SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     Image textImage(surface, texture);
     blit(textImage, destination, 0);
     TTF_CloseFont(font);
+}
+
+void Graphics::present() {
+    SDL_RenderPresent(renderer);
 }
 
 void Graphics::toSDLCoordinates(Point& p) const {

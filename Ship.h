@@ -1,15 +1,14 @@
 #pragma once
-
 #include "Color.h"
 #include "GameObject.h"
 #include "Input.h"
 #include "Point.h"
 #include "Image.h"
-#include "Graphics.h"
+#include "GameObject.h"
 
 enum class Player {One, Two };
 
-class Ship :public GameObject {
+class Ship : public GameObject {
 public:
 	float mass; // kg
 	long lastUpdate;
@@ -24,7 +23,6 @@ public:
 	void    update(int delta); // time elapsed in ms
     Image   getImage() const;
     void    setImage(Image);
-    void    draw(Graphics&);
 private:
 	Image image;
 	Point spawn;

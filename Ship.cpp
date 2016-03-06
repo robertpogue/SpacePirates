@@ -40,35 +40,6 @@ void Ship::setImage(Image i) {
     image = i;
 }
 
-void Ship::draw(Graphics& graphics) {
-    graphics.blit(image, getPosition(), getRotation());
-    graphics.drawPoint(getPosition());
-	/*if(booster) {
-		Point flameBottomRight(-4,-6);
-		Point flameBottomLeft(4,-6);
-		Point flameTop(0,-20);
-		flameBottomRight = rotateAboutOrigin(flameBottomRight, getRot());
-		flameBottomLeft = rotateAboutOrigin(flameBottomLeft, getRot());
-		flameTop = rotateAboutOrigin(flameTop, getRot());
-		Graphics::triangle(flameBottomLeft + getPos(), 
-			               flameBottomRight + getPos(),
-						   flameTop + getPos(),
-						   Color(200,200,40));
-	}*/
-	/*if(hasGold) {
-		Point goldBottomRight(2,-4);
-		Point goldBottomLeft(-2,-4);
-		Point goldTop(0,5);
-		goldBottomRight = rotateAboutOrigin(goldBottomRight, getRot());
-		goldBottomLeft = rotateAboutOrigin(goldBottomLeft, getRot());
-		goldTop = rotateAboutOrigin(goldTop, getRot());
-		Graphics::triangle(goldBottomLeft + getPos(), 
-			               goldBottomRight + getPos(),
-						   goldTop + getPos(),
-						   Color(255,255,255));
-	}*/
-}
-
 void Ship::notify(Input::Event e) {
 	if(player == Player::One) {
 		if(e == Input::ARROW_UP) booster = true;
