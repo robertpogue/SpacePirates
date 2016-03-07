@@ -17,19 +17,19 @@ public:
 	void notify(Input::Event);
     //void setTexture(Texture& t);
 	// inherited from RigidBody
-	void    onCollision(const RigidBody& other);
 	void    setSpawn(Point);
+    void    respawn();
 	//void  setColor(Color);
 	void    update(int delta); // time elapsed in ms
     Image   getImage() const;
     void    setImage(Image);
+    Point   getCenterOfMass() const;
 private:
 	Image image;
+    Point centerOfMass; // on image in px; origin bottom left; +x right; +y up
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;
 	bool booster;
-	bool hasGold;
 	Point rotateAboutOrigin(Point p, float radians);
-	void reset();
 };

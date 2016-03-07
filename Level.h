@@ -17,9 +17,9 @@ public:
     void setBackground(Image);
 private:
     std::vector<Ship> ships;
-    Image level; // collidable
+    Image level;      // collidable
     Image background; // pretty
-	float gravity; // kg*px/s/s
-
-    void detectCollisions();
+    int levelWidthPx;
+    int levelHeightPx;
+	float gravity;    // kg*px/s/s
 };

@@ -10,8 +10,7 @@
 
 Ship::Ship(Player p, float mass) : booster(false), player(p),
                        rotatingClockwise(false),
-					   rotatingCounterclockwise(false),
-					   hasGold(false) {
+					   rotatingCounterclockwise(false) {
 	setCollisionRadius(14);
     setMass(mass);
 };
@@ -20,7 +19,7 @@ void Ship::update(int deltaT) {
 
 	// apply booster force
 	if(booster) {
-		const float boosterForce = 900.0f; // kg*px/s/s
+		const float boosterForce = 500.0f; // kg*px/s/s
 		applyForce(-sin(getRotation()) * boosterForce, cos(getRotation()) * boosterForce);
 	}
 	float turnRate = 5;// radians/second
@@ -38,6 +37,9 @@ Image Ship::getImage() const {
 
 void Ship::setImage(Image i) {
     image = i;
+    // calculate center of mass
+    centerOfMass.x = image.getWidth() / 2.f;
+    centerOfMass.y = image.getHeight() / 2.f;
 }
 
 void Ship::notify(Input::Event e) {
@@ -59,47 +61,22 @@ void Ship::notify(Input::Event e) {
 	}
 }
 
-void Ship::onCollision(const RigidBody& other) {
-	// near gold
-	const Gold* g = dynamic_cast<const Gold*>(&other);
-	// g will be null if colliding object is not gold
-	if(g) {
-		hasGold = true;
-	}
-
-	const Platform* p = dynamic_cast<const Platform*>(&other);
-	if(p && hasGold) {
-		hasGold = false;
-	}
-
-	float relativeXVel = getXVel() - other.getXVel();
-	float relativeYVel = getYVel() - other.getYVel();
-
-	// handle landing softly
-	if( relativeYVel > -20 && // decending slowly
-		relativeXVel < 10 &&   // relative to ground
-		relativeXVel > -10 &&
-		getRotation() < .4f &&  // vertically oriented
-		getRotation() > -.4f &&
-		getPosition().y > other.getPosition().y // must be above block
-		) 
-	{
-		//neutralize downward force
-		setYForce(std::max(0.f, getYForce())); 
-		setYVel(std::max(0.f, getYVel()));
-		setXVel(0);
-		setRotation(0);
-	}
-	else reset();
+void Ship::setSpawn(Point sp) {
+    spawn = sp;
+    setPosition(spawn);
 }
 
-void Ship::reset() {
+void Ship::respawn() {
 	setXVel(0);
 	setYVel(0);
 	setPosition(spawn);
 	setRotation(0);
-	hasGold = false;
 }
+
+Point Ship::getCenterOfMass() const {
+    return centerOfMass;
+}
+
 // private members
 Point Ship::rotateAboutOrigin(Point p, float radians) {
 	float newX = p.x * cos(radians) - p.y * sin(radians);
@@ -107,7 +84,4 @@ Point Ship::rotateAboutOrigin(Point p, float radians) {
 	return Point(newX, newY);
 }
 
-void Ship::setSpawn(Point sp) {
-    spawn = sp;
-    setPosition(spawn);
-}
+
