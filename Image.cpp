@@ -48,13 +48,11 @@ Color Image::getPixel(Point p) {
 
     // check for expected pixel format
     assert(surface->format->BytesPerPixel == 2);
-    int result = SDL_LockSurface(surface.get());
-    assert(result == 0);
+    assert(SDL_MUSTLOCK(surface) == false);
     Uint16* pixels = (Uint16*)surface.get()->pixels;
     Uint8 r, g, b;
     Uint16 pixel = pixels[(y*surface->w) + x];
     SDL_GetRGB(pixel, surface->format, &r, &g, &b);
-    SDL_UnlockSurface(surface.get());
     return Color(r, g, b); // FUTURE add alpha chanel
 
 }
