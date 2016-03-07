@@ -34,6 +34,13 @@ void Level::update(int delta) {
             position.y < 0 || position.y > levelHeightPx) {
             ship.respawn();
         }
+
+        // collide with level
+        Color c = level.getPixel(ship.getPosition());
+        const Color transparent(255, 0, 255);
+        if(!(c == transparent)) {
+            ship.respawn();
+        }
     }
 
 }
@@ -44,7 +51,7 @@ void Level::draw(Graphics& graphics) {
     graphics.draw(level);
     for(auto ship : ships) {
         graphics.draw(ship);
-    }  
+    }
 }
 
 void Level::setLevel(Image i) {

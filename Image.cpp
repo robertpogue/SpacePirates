@@ -31,8 +31,8 @@ SDL_Texture* Image::sdlTexture() const {
 
 Color Image::getPixel(Point p) {
     // sdl has origin at top left, +x right, +y down
-
-    //p.y = -p.y + getHeight();
+    // convert to sdl coordinates
+    p.y = -p.y + getHeight();
     //p.x += getWidth() / 2.f;
     //p.y += getHeight() / 2.f;
 
@@ -45,9 +45,16 @@ Color Image::getPixel(Point p) {
     x = std::max(x, 0);
     y = std::min(y, getHeight());
     y = std::max(y, 0);
-    Uint32* pixels = (Uint32*)surface->pixels;
-    Uint8 r, g, b, a;
-    SDL_GetRGBA(pixels[(y*surface->w) + x], surface->format, &r, &g, &b, &a);
+
+    // check for expected pixel format
+    assert(surface->format->BytesPerPixel == 2);
+    int result = SDL_LockSurface(surface.get());
+    assert(result == 0);
+    Uint16* pixels = (Uint16*)surface.get()->pixels;
+    Uint8 r, g, b;
+    Uint16 pixel = pixels[(y*surface->w) + x];
+    SDL_GetRGB(pixel, surface->format, &r, &g, &b);
+    SDL_UnlockSurface(surface.get());
     return Color(r, g, b); // FUTURE add alpha chanel
 
 }
