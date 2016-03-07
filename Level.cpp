@@ -10,7 +10,7 @@
 #include "Ship.h"
 
 Level::Level() 
-    : gravity(-10),
+    : gravity(-15),
     levelHeightPx(0),
     levelWidthPx(0) {
     
@@ -40,8 +40,8 @@ void Level::update(int delta) {
 
 void Level::draw(Graphics& graphics) {
     Point screenCenter{ graphics.screenWidth / 2, graphics.screenHeight / 2 };
-    graphics.blit(background, screenCenter, 0);
-    graphics.blit(level, screenCenter, 0);
+    graphics.draw(background);
+    graphics.draw(level);
     for(auto ship : ships) {
         graphics.draw(ship);
     }  
@@ -62,5 +62,4 @@ void Level::notify(Input::Event e) {
         ship.notify(e);
     }
 }
-
 

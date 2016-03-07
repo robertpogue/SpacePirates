@@ -19,7 +19,7 @@ void Ship::update(int deltaT) {
 
 	// apply booster force
 	if(booster) {
-		const float boosterForce = 900.0f; // kg*px/s/s
+		const float boosterForce = 500.0f; // kg*px/s/s
 		applyForce(-sin(getRotation()) * boosterForce, cos(getRotation()) * boosterForce);
 	}
 	float turnRate = 5;// radians/second
@@ -37,6 +37,9 @@ Image Ship::getImage() const {
 
 void Ship::setImage(Image i) {
     image = i;
+    // calculate center of mass
+    centerOfMass.x = image.getWidth() / 2.f;
+    centerOfMass.y = image.getHeight() / 2.f;
 }
 
 void Ship::notify(Input::Event e) {
@@ -68,6 +71,10 @@ void Ship::respawn() {
 	setYVel(0);
 	setPosition(spawn);
 	setRotation(0);
+}
+
+Point Ship::getCenterOfMass() const {
+    return centerOfMass;
 }
 
 // private members

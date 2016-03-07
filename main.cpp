@@ -46,7 +46,7 @@ int main(int argc, char ** argv) {
             graphics.clear();
             level.update(frameTime);
             level.draw(graphics);
-            graphics.draw(std::to_string(fps) + " fps", Point(25, graphics.getHeight() - 10.f));
+            graphics.draw(std::to_string(fps) + " fps", Point(25, graphics.getHeight() - 20.f));
             graphics.present();
         }
 

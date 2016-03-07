@@ -46,42 +46,23 @@ int Graphics::getHeight() const {
     return h;
 }
 
-void Graphics::blit(const Image& texture, Point destination, float rotation) {
-    // convert from Graphics coordinate system (origin at bottom left)
-    // to SDL coordinate system (origin at top left)
-    toSDLCoordinates(destination);
-    rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
-    SDL_Rect dest;
-    dest.x = (int)destination.x;
-    dest.y = (int)destination.y;
-
-    // sdl positions the texture's top left corner at dest
-    // we would like to position the texture's center at dest.
-    // subtract half width and half height
-    dest.x -= texture.getWidth()/2;
-    dest.y -= texture.getHeight()/2;
-
-    dest.w = texture.getWidth(); // maintain texture size
-    dest.h = texture.getHeight();
-    
-
-    SDL_RenderCopyEx(renderer,
-                     texture.sdlTexture(), // source
-                     nullptr,              // source rectangle
-                     &dest,                // destination rectangle
-                     rotation,             // angle in degrees
-                     nullptr,              // center of rotation, default to h/2, w/2
-                     SDL_FLIP_NONE );
-}
-
 void Graphics::draw(Point p) {
     toSDLCoordinates(p);
     SDL_RenderDrawPoint(renderer, (int)p.x, (int)p.y);
 }
 
 void Graphics::draw(Ship ship) {
-    blit(ship.getImage(), ship.getPosition(), ship.getRotation());
+    Point position = ship.getPosition();
+    // adjust for center of mass
+    position = position - ship.getCenterOfMass();
+    blit(ship.getImage(), position, ship.getRotation());
+
+    // debug position
     draw(ship.getPosition());
+}
+
+void Graphics::draw(Image i) {
+    blit(i, Point(0,0));
 }
 
 void Graphics::draw(std::string text, Point destination) {
@@ -98,4 +79,29 @@ void Graphics::present() {
 
 void Graphics::toSDLCoordinates(Point& p) const {
     p.y = -p.y + getHeight();
+}
+
+void Graphics::blit(const Image& texture, Point destination, float rotation) {
+    // convert from Graphics coordinate system (origin at bottom left)
+    // to SDL coordinate system (origin at top left)
+    toSDLCoordinates(destination);
+
+    // move texture origin from top left to bottom left
+    destination.y -= texture.getHeight();
+    rotation = -rotation * (180.0f / 3.14159f); // convert from radians to pi
+
+    SDL_Rect dest;
+    dest.x = (int)destination.x;
+    dest.y = (int)destination.y;
+
+    dest.w = texture.getWidth(); // maintain texture size
+    dest.h = texture.getHeight();
+
+    SDL_RenderCopyEx(renderer,
+        texture.sdlTexture(), // source
+        nullptr,              // source rectangle
+        &dest,                // destination rectangle
+        rotation,             // angle in degrees
+        nullptr,              // center of rotation, default to h/2, w/2
+        SDL_FLIP_NONE);
 }
