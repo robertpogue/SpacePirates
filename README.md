@@ -7,11 +7,11 @@
 ####Linux:
   sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 
-  mkdir build && cd build
-  cmake ..
+  mkdir build && cd build<br />
+  cmake ..<br />
   make
 
-  Then, to run:
+  Then, to run:<br />
   ./bin/SpacePirates
 
 ####Debian package:
