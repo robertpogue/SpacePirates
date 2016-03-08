@@ -33,10 +33,16 @@ void Level::update(int delta) {
         }
 
         // collide with level
-        Color c = level.getPixel(ship.getPosition());
-        const Color transparent(255, 0, 255);
-        if(!(c == transparent)) {
-            ship.respawn();
+        for(auto& ship : ships) {
+            for(auto point : ship.collisionPoints) {
+                point.rotateAboutOrigin(ship.getRotation()); // rotate with ship
+                point = point + ship.getPosition(); // to world space
+                Color c = level.getPixel(point);
+                const Color transparent(255, 0, 255);
+                if(c != transparent) {
+                    ship.respawn();
+                }
+            }
         }
     }
 
@@ -46,8 +52,17 @@ void Level::draw(Graphics& graphics) {
     Point screenCenter{ graphics.screenWidth / 2, graphics.screenHeight / 2 };
     graphics.draw(background);
     graphics.draw(level);
-    for(auto ship : ships) {
+    for(const auto& ship : ships) {
         graphics.draw(ship);
+    }
+
+    //TODO remove testing
+    for(auto& ship : ships) {
+        for(auto point : ship.collisionPoints) {
+            point.rotateAboutOrigin(ship.getRotation()); // rotate with ship
+            point = point + ship.getPosition(); // to world space
+            graphics.draw(point);
+        }
     }
 }
 

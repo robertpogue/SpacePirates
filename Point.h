@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 struct Point {
 	float x, y;
@@ -13,4 +14,9 @@ struct Point {
 	float squareMagnitude() const {
 		return x*x+y*y;
 	}
+   void rotateAboutOrigin(float radians) {
+        float newX = x * cos(radians) - y * sin(radians);
+        y = x * sin(radians) + y * cos(radians);
+        x = newX;
+    }
 };

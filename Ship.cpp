@@ -1,4 +1,3 @@
-#include <cmath>
 #include <algorithm>
 #include "Ship.h"
 #include "Color.h"
@@ -46,15 +45,10 @@ void Ship::setImage(Image i) {
         for(int y = 0; y < i.getHeight(); y++) {
             // never consider a transparent pixel collidable
             Color transparent(255, 0, 255); 
-            if(image.getPixel(x,y) == transparent) {
-                continue;
+            if(image.getPixel(x,y) != transparent) {
+                collisionPoints.push_back(Point((float)x, (float)y) - centerOfMass);
             }
-            // if pixel is on an edge (has less than 7 neighboring pixels)
-            // add it to collision points
-            int neighbors = 0;
-            //TODO finish
-
-
+            //FUTURE optimize to only add collision points at edge
         }
     }
 }
@@ -93,12 +87,4 @@ void Ship::respawn() {
 Point Ship::getCenterOfMass() const {
     return centerOfMass;
 }
-
-// private members
-Point Ship::rotateAboutOrigin(Point p, float radians) {
-	float newX = p.x * cos(radians) - p.y * sin(radians);
-	float newY = p.x * sin(radians) + p.y * cos(radians);
-	return Point(newX, newY);
-}
-
 

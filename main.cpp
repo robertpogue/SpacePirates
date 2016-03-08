@@ -26,8 +26,8 @@ int main(int argc, char ** argv) {
         player1.respawn();
         player2.setSpawn(Point(100, 250));
         player2.respawn();
-        player1.setImage(graphics.load("ships/ship1.bmp"));
-        player2.setImage(graphics.load("ships/ship2.bmp"));
+        player1.setImage(graphics.load("ships/ship2.bmp"));
+        player2.setImage(graphics.load("ships/ship3.bmp"));
         level.add(player1);
         level.add(player2);
 

@@ -25,13 +25,12 @@ public:
     Image   getImage() const;
     void    setImage(Image); // calculates center of mass and builds collision model
     Point   getCenterOfMass() const;
+    std::vector<Point> collisionPoints; // relative to center of mass
 private:
 	Image image;
     Point centerOfMass; // on image in px; origin bottom left; +x right; +y up
-    std::vector<Point> collisionPoints;
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;
 	bool booster;
-	Point rotateAboutOrigin(Point p, float radians);
 };
