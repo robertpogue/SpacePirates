@@ -40,7 +40,8 @@ void Level::update(int delta) {
                 Color c = level.getPixel(point);
                 const Color transparent(255, 0, 255);
                 if(c != transparent) {
-                    float forceMultiplier = 1;
+                    float forceMultiplier = 100;
+                    if(ship.getXVel() + ship.getYVel() > 4) ship.respawn();
                     ship.applyForce(-ship.getXVel() * forceMultiplier,
                                     -ship.getYVel() * forceMultiplier);
                 }
