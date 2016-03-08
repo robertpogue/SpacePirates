@@ -31,6 +31,18 @@ add_executable(SpacePirates Block.h Block.cpp GameObject.h GameObject.cpp Gold.h
 target_link_libraries(SpacePirates ${SDL2_LIBRARY})
 target_link_libraries(SpacePirates ${SDL2_TTF_LIBRARY})
 
+if(MSVC)
+	get_filename_component(SDL2_TTF_LIBRARY_DIR ${SDL2_TTF_LIBRARY} DIRECTORY)
+	add_custom_command(TARGET SpacePirates POST_BUILD
+	                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	                   "${SDL2_TTF_LIBRARY_DIR}/SDL2_ttf.dll" $<TARGET_FILE_DIR:SpacePirates>
+	                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	                   "${SDL2_TTF_LIBRARY_DIR}/libfreetype-6.dll" $<TARGET_FILE_DIR:SpacePirates>
+	                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	                   "${SDL2_TTF_LIBRARY_DIR}/zlib1.dll" $<TARGET_FILE_DIR:SpacePirates>
+	                   )
+endif()
+
 add_custom_command(TARGET SpacePirates POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${CMAKE_SOURCE_DIR}/levels ${CMAKE_BINARY_DIR}/levels
