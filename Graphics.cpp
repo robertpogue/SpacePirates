@@ -56,9 +56,6 @@ void Graphics::draw(Ship ship) {
     // adjust for center of mass
     position = position - ship.getCenterOfMass();
     blit(ship.getImage(), position, ship.getRotation());
-
-    // debug position
-    draw(ship.getPosition());
 }
 
 void Graphics::draw(Image i) {

@@ -7,7 +7,7 @@
 #include "Ship.h"
 
 Level::Level() 
-    : gravity(-15),
+    : gravity(-10),
     levelHeightPx(0),
     levelWidthPx(0) {
     
@@ -54,15 +54,6 @@ void Level::draw(Graphics& graphics) {
     graphics.draw(level);
     for(const auto& ship : ships) {
         graphics.draw(ship);
-    }
-
-    //TODO remove testing
-    for(auto& ship : ships) {
-        for(auto point : ship.collisionPoints) {
-            point.rotateAboutOrigin(ship.getRotation()); // rotate with ship
-            point = point + ship.getPosition(); // to world space
-            graphics.draw(point);
-        }
     }
 }
 

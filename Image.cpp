@@ -30,15 +30,18 @@ SDL_Texture* Image::sdlTexture() const {
 }
 
 Color Image::getPixel(Point p) {
-    // sdl has origin at top left, +x right, +y down
-    // convert to sdl coordinates
-    p.y = -p.y + getHeight();
-    //p.x += getWidth() / 2.f;
-    //p.y += getHeight() / 2.f;
-
     // round to nearest pixel
     int x = (int)round(p.x);
     int y = (int)round(p.y);
+    return getPixel(x, y);
+}
+
+Color Image::getPixel(int x, int y) {
+    // sdl has origin at top left, +x right, +y down
+    // convert to sdl coordinates
+    y = -y + getHeight()-1;
+    //p.x += getWidth() / 2.f;
+    //p.y += getHeight() / 2.f;
 
     // clamp to range (0,0) to (width, height)
     x = std::min(x, getWidth());
@@ -55,10 +58,6 @@ Color Image::getPixel(Point p) {
     Uint16 pixel = pixels[(y*surface->w) + x];
     SDL_GetRGB(pixel, surface->format, &r, &g, &b);
     return Color(r, g, b); // FUTURE add alpha chanel
-}
-
-Color Image::getPixel(int x, int y) {
-    return getPixel(Point((float)x, (float)y));
 }
 
 int Image::getWidth() const {
