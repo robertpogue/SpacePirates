@@ -17,6 +17,7 @@ public:
     Image(std::string path, SDL_Renderer*);
     Image(SDL_Surface*, SDL_Texture*); // takes ownership - will free
 	Color        getPixel(Point p);    // origin at bottom left, +x to right, +y up
+    Color        getPixel(int x, int y);
     int          getWidth() const;
     int          getHeight() const;
 

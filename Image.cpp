@@ -48,13 +48,17 @@ Color Image::getPixel(Point p) {
 
     // check for expected pixel format
     assert(surface->format->BytesPerPixel == 2);
+    // verify the surface does not need to be locked before accessing
     assert(SDL_MUSTLOCK(surface) == false);
     Uint16* pixels = (Uint16*)surface.get()->pixels;
     Uint8 r, g, b;
     Uint16 pixel = pixels[(y*surface->w) + x];
     SDL_GetRGB(pixel, surface->format, &r, &g, &b);
     return Color(r, g, b); // FUTURE add alpha chanel
+}
 
+Color Image::getPixel(int x, int y) {
+    return getPixel(Point((float)x, (float)y));
 }
 
 int Image::getWidth() const {

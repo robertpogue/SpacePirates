@@ -1,12 +1,11 @@
-#include "Ship.h"
-#include "Color.h"
-#include "Gold.h"
-#include "Graphics.h"
-#include "Input.h"
-#include "Platform.h"
-#include "Point.h"
 #include <cmath>
 #include <algorithm>
+#include "Ship.h"
+#include "Color.h"
+#include "Graphics.h"
+#include "Input.h"
+#include "Point.h"
+
 
 Ship::Ship(Player p, float mass) : booster(false), player(p),
                        rotatingClockwise(false),
@@ -38,8 +37,26 @@ Image Ship::getImage() const {
 void Ship::setImage(Image i) {
     image = i;
     // calculate center of mass
+    //FUTURE find center of mass from pixel distribution
     centerOfMass.x = image.getWidth() / 2.f;
     centerOfMass.y = image.getHeight() / 2.f;
+
+    // build physics model
+    for(int x=0; x < i.getWidth(); x++) {
+        for(int y = 0; y < i.getHeight(); y++) {
+            // never consider a transparent pixel collidable
+            Color transparent(255, 0, 255); 
+            if(image.getPixel(x,y) == transparent) {
+                continue;
+            }
+            // if pixel is on an edge (has less than 7 neighboring pixels)
+            // add it to collision points
+            int neighbors = 0;
+            //TODO finish
+
+
+        }
+    }
 }
 
 void Ship::notify(Input::Event e) {

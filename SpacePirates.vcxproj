@@ -152,13 +152,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Gold.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -166,14 +164,11 @@
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Block.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Gold.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="Platform.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Ship.h" />

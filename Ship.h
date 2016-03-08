@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Color.h"
 #include "GameObject.h"
 #include "Input.h"
@@ -22,11 +23,12 @@ public:
 	//void  setColor(Color);
 	void    update(int delta); // time elapsed in ms
     Image   getImage() const;
-    void    setImage(Image);
+    void    setImage(Image); // calculates center of mass and builds collision model
     Point   getCenterOfMass() const;
 private:
 	Image image;
     Point centerOfMass; // on image in px; origin bottom left; +x right; +y up
+    std::vector<Point> collisionPoints;
 	Point spawn;
 	bool rotatingClockwise;
 	bool rotatingCounterclockwise;

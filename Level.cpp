@@ -1,11 +1,8 @@
 #include "Level.h"
 #include "Color.h"
-#include "Block.h"
-#include "Gold.h"
 #include "GameObject.h"
 #include "Graphics.h"
 #include "Image.h"
-#include "Platform.h"
 #include "Point.h"
 #include "Ship.h"
 
