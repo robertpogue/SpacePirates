@@ -2,3 +2,5 @@
 Debug/
 *.opendb
 *.suo
+*.o
+spacepirates
